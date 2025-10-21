@@ -172,21 +172,95 @@
 <body>
   <div class="container">
     <header>
-      <!-- LOGO PLACEHOLDER -->
-      <img src="logo-space-league-of-justice.png" alt="Space League of Justice" class="logo" onerror="this.style.display='none'">
+      <!-- LOGO -->
+      <img src="logo-space-league-of-justice.png" alt="Space League of Justice" class="logo">
       <h1>Celestial Theodolite Calculator</h1>
       <p class="subtitle">Compare Flat Earth vs. Globe Earth models using stellar occultation data</p>
     </header>
 
     <!-- IMAGE PLACEHOLDERS -->
     <div class="images-section">
-      <div class="image-placeholder">
-        Presentation Image 1<br>
-        (Replace: presentation-image-1.jpg)
+      <!-- Image 1: H1 - Earth is flat -->
+      <div style="flex: 1; background: white; border-radius: 8px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h3 style="color: #666; margin-bottom: 5px;">KISS hypothesis</h3>
+        <h4 style="color: green; font-size: 1.3rem; margin-bottom: 15px;">H₁: Earth is flat</h4>
+        <svg width="100%" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Flat ground line -->
+          <line x1="20" y1="170" x2="580" y2="170" stroke="black" stroke-width="3"/>
+          
+          <!-- Mountain 1 -->
+          <path d="M 50 170 L 80 120 L 90 135 L 110 100 L 130 120 L 140 110 L 160 170 Z" 
+                fill="white" stroke="black" stroke-width="3"/>
+          
+          <!-- Mountain 2 -->
+          <path d="M 180 170 L 210 110 L 230 130 L 250 95 L 270 115 L 290 105 L 310 120 L 330 170 Z" 
+                fill="white" stroke="black" stroke-width="3"/>
+          
+          <!-- Line of sight (dashed) -->
+          <line x1="290" y1="115" x2="520" y2="155" stroke="gray" stroke-width="3" stroke-dasharray="10,5"/>
+          
+          <!-- Telescope -->
+          <g transform="translate(510, 140)">
+            <rect x="0" y="0" width="35" height="25" fill="black" stroke="black" stroke-width="2"/>
+            <polygon points="35,5 45,0 45,30 35,25" fill="black"/>
+            <!-- Tripod -->
+            <line x1="15" y1="25" x2="10" y2="40" stroke="black" stroke-width="2"/>
+            <line x1="20" y1="25" x2="25" y2="40" stroke="black" stroke-width="2"/>
+            <line x1="15" y1="25" x2="20" y2="40" stroke="black" stroke-width="2"/>
+          </g>
+          
+          <!-- Observer -->
+          <circle cx="530" cy="150" r="8" fill="black"/>
+          <line x1="530" y1="158" x2="530" y2="175" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="165" x2="520" y2="170" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="165" x2="540" y2="170" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="175" x2="520" y2="185" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="175" x2="540" y2="185" stroke="black" stroke-width="3"/>
+        </svg>
       </div>
-      <div class="image-placeholder">
-        Presentation Image 2<br>
-        (Replace: presentation-image-2.jpg)
+      
+      <!-- Image 2: H1 vs H0 -->
+      <div style="flex: 1; background: white; border-radius: 8px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h3 style="color: #666; margin-bottom: 5px;">KISS hypothesis</h3>
+        <h4 style="color: green; font-size: 1.1rem; margin-bottom: 3px;">H₁: Earth is flat</h4>
+        <h4 style="color: red; font-size: 1.1rem; margin-bottom: 15px;">H₀: Earth is not flat</h4>
+        <svg width="100%" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Curved ground line -->
+          <path d="M 20 180 Q 300 140 580 180" fill="none" stroke="black" stroke-width="3"/>
+          
+          <!-- Mountain 1 on curve -->
+          <g transform="translate(50, 175)">
+            <path d="M 0 0 L 30 -60 L 40 -45 L 60 -75 L 80 -55 L 90 -65 L 110 0 Z" 
+                  fill="white" stroke="black" stroke-width="3"/>
+          </g>
+          
+          <!-- Mountain 2 on curve -->
+          <g transform="translate(180, 160)">
+            <path d="M 0 0 L 30 -50 L 50 -30 L 70 -60 L 90 -40 L 110 -50 L 130 -30 L 150 0 Z" 
+                  fill="white" stroke="black" stroke-width="3"/>
+          </g>
+          
+          <!-- Line of sight (dashed, tangent to curve) -->
+          <line x1="290" y1="125" x2="520" y2="165" stroke="gray" stroke-width="3" stroke-dasharray="10,5"/>
+          
+          <!-- Telescope -->
+          <g transform="translate(510, 150)">
+            <rect x="0" y="0" width="35" height="25" fill="black" stroke="black" stroke-width="2"/>
+            <polygon points="35,5 45,0 45,30 35,25" fill="black"/>
+            <!-- Tripod -->
+            <line x1="15" y1="25" x2="10" y2="40" stroke="black" stroke-width="2"/>
+            <line x1="20" y1="25" x2="25" y2="40" stroke="black" stroke-width="2"/>
+            <line x1="15" y1="25" x2="20" y2="40" stroke="black" stroke-width="2"/>
+          </g>
+          
+          <!-- Observer -->
+          <circle cx="530" cy="160" r="8" fill="black"/>
+          <line x1="530" y1="168" x2="530" y2="185" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="175" x2="520" y2="180" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="175" x2="540" y2="180" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="185" x2="520" y2="195" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="185" x2="540" y2="195" stroke="black" stroke-width="3"/>
+        </svg>
       </div>
     </div>
 
@@ -260,13 +334,51 @@
         <h3 style="color: var(--dark); margin-bottom: 10px;">📐 Model 1: Flat Earth (FE)</h3>
         <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid var(--danger); border-radius: 4px;">
           <p><strong>Assumption:</strong> Earth is flat, line of sight is straight</p>
+          
+          <div style="text-align: center; margin: 15px 0;">
+            <svg width="500" height="200" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid #ccc; background: #fff;">
+              <!-- Flat ground line -->
+              <line x1="50" y1="150" x2="450" y2="150" stroke="#8B4513" stroke-width="4"/>
+              <text x="200" y="170" font-size="11" fill="#666">Flat Earth surface</text>
+              
+              <!-- Observer -->
+              <circle cx="100" cy="140" r="5" fill="red"/>
+              <text x="70" y="135" font-size="12" font-weight="bold" fill="red">Observer</text>
+              <text x="75" y="190" font-size="10" fill="red">h = 2073m</text>
+              
+              <!-- Peak -->
+              <circle cx="400" cy="120" r="5" fill="green"/>
+              <text x="405" y="115" font-size="12" font-weight="bold" fill="green">Peak</text>
+              <text x="380" y="190" font-size="10" fill="green">h = 4300m</text>
+              
+              <!-- Line of sight (straight) -->
+              <line x1="100" y1="140" x2="400" y2="120" stroke="blue" stroke-width="2" stroke-dasharray="5,5"/>
+              <text x="230" y="115" font-size="11" fill="blue">Straight line of sight</text>
+              
+              <!-- Distance annotation -->
+              <line x1="100" y1="155" x2="400" y2="155" stroke="#666" stroke-width="1"/>
+              <text x="220" y="175" font-size="11" fill="#666">d = 50,778 m</text>
+              
+              <!-- Angle theta -->
+              <path d="M 150 140 L 130 140 A 30 30 0 0 1 135 125" fill="none" stroke="purple" stroke-width="2"/>
+              <text x="140" y="130" font-size="13" font-weight="bold" fill="purple">θ</text>
+              
+              <!-- Height difference -->
+              <line x1="395" y1="120" x2="395" y2="140" stroke="orange" stroke-width="2"/>
+              <text x="360" y="135" font-size="10" fill="orange">Δh</text>
+            </svg>
+          </div>
+          
           <p><strong>Formula:</strong></p>
           <p style="margin-left: 20px; font-family: 'Courier New', monospace;">
             θ<sub>FE</sub> = θ<sub>star</sub> = <span id="thetaStarDisplay">2.5562°</span><br>
             Δh<sub>predicted</sub> = d × tan(θ<sub>star</sub>)<br>
             Δh<sub>predicted</sub> = <span id="distanceDisplay">50,778</span> × tan(2.5562°) = <span id="deltaH_FE_display">2,266.9</span> m<br><br>
             <em>Actual Δh = <span id="deltaHActual">2,227</span> m</em><br>
-            <strong>Error = <span id="errorH_FE_display">+39.9</span> m</strong>
+            <strong>❌ Error = <span id="errorH_FE_display">+39.9</span> m (overpredicts!)</strong>
+          </p>
+          <p style="margin-top: 10px; font-size: 13px;">
+            <strong>⚠️ Problem:</strong> Ignores Earth's curvature completely. Works only for very short distances.
           </p>
         </div>
       </div>
@@ -275,6 +387,46 @@
         <h3 style="color: var(--dark); margin-bottom: 10px;">🌍 Model 2: Globe Earth - Heffron Approximation</h3>
         <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid var(--warning); border-radius: 4px;">
           <p><strong>Assumption:</strong> Earth is curved, uses "drop" approximation</p>
+          
+          <div style="text-align: center; margin: 15px 0;">
+            <svg width="500" height="250" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid #ccc; background: #fff;">
+              <!-- Earth curve -->
+              <path d="M 50 200 Q 250 160 450 200" fill="none" stroke="#8B4513" stroke-width="4"/>
+              <text x="200" y="230" font-size="11" fill="#666">Curved Earth surface</text>
+              
+              <!-- Observer -->
+              <circle cx="100" cy="190" r="5" fill="red"/>
+              <text x="70" y="185" font-size="12" font-weight="bold" fill="red">Observer</text>
+              
+              <!-- Peak -->
+              <circle cx="400" cy="185" r="5" fill="green"/>
+              <text x="405" y="180" font-size="12" font-weight="bold" fill="green">Peak</text>
+              
+              <!-- Arc distance (along surface) -->
+              <path d="M 100 195 Q 250 155 400 190" fill="none" stroke="orange" stroke-width="2" stroke-dasharray="3,3"/>
+              <text x="220" y="150" font-size="11" fill="orange" font-weight="bold">d (arc) = 50,778 m</text>
+              
+              <!-- "Drop" annotation -->
+              <line x1="400" y1="185" x2="400" y2="130" stroke="red" stroke-width="2"/>
+              <text x="405" y="155" font-size="10" fill="red" font-weight="bold">drop = 202m</text>
+              
+              <!-- Tangent line (WRONG assumption) -->
+              <line x1="100" y1="190" x2="400" y2="130" stroke="blue" stroke-width="2" stroke-dasharray="5,5"/>
+              <text x="180" y="140" font-size="11" fill="blue">Line of sight</text>
+              
+              <!-- Height difference (corrected) -->
+              <line x1="100" y1="190" x2="100" y2="130" stroke="purple" stroke-width="2"/>
+              <text x="50" y="160" font-size="10" fill="purple">Δh - drop</text>
+              <text x="45" y="175" font-size="10" fill="purple">= 2025m</text>
+              
+              <!-- ERROR indicator -->
+              <rect x="150" y="20" width="200" height="60" fill="#fff3cd" stroke="#ff9800" stroke-width="2" rx="5"/>
+              <text x="160" y="40" font-size="12" font-weight="bold" fill="#d32f2f">❌ FATAL ERROR:</text>
+              <text x="160" y="58" font-size="10" fill="#333">Uses ARC distance 'd'</text>
+              <text x="160" y="72" font-size="10" fill="#333">in RIGHT-ANGLE formula!</text>
+            </svg>
+          </div>
+          
           <p><strong>Formulas:</strong></p>
           <p style="margin-left: 20px; font-family: 'Courier New', monospace;">
             drop = d² / (2R)<br>
@@ -282,8 +434,14 @@
             θ<sub>Heffron</sub> = arctan((Δh - drop) / d)<br>
             θ<sub>Heffron</sub> = arctan((<span id="deltaHActual2">2,227</span> - 202.4) / 50,778)<br>
             θ<sub>Heffron</sub> = arctan(2,024.6 / 50,778) = <span id="thetaHeffronDisplay">2.283°</span><br><br>
-            <strong>⚠️ PROBLEM: Uses arc distance 'd' as if it were a straight line!</strong><br>
-            This is geometrically inconsistent and systematically underestimates the angle.
+            <strong>❌ Error = -202 m (massively underpredicts!)</strong>
+          </p>
+          <p style="margin-top: 10px; font-size: 13px; background: #ffebee; padding: 10px; border-radius: 4px;">
+            <strong>⚠️ CRITICAL PROBLEM:</strong> Uses arc distance 'd' (measured along curved surface) 
+            in arctan formula that requires a STRAIGHT line distance! This is like using a tape measure 
+            that bends around the Earth's curve, but treating it as if it were stretched tight. 
+            The formula also ignores that local horizons are tilted on a sphere. 
+            <strong>Systematically underestimates angles by ~0.27°!</strong>
           </p>
         </div>
       </div>
@@ -316,6 +474,64 @@
             Base elevation angle: α - 90° = <span id="thetaBaseDisplay">2.282°</span><br>
             Correction for tilt: +σ/2 = +<span id="sigmaCorrectionDisplay">0.228°</span><br>
             <strong>Final elevation angle: θ = (α - 90°) + σ/2 = <span id="thetaSphericalDisplay">2.510°</span></strong><br><br>
+            
+            <div style="text-align: center; margin: 20px 0;">
+              <svg width="550" height="300" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid #ccc; background: #f9f9f9;">
+                <!-- Earth circle (surface) -->
+                <circle cx="275" cy="220" r="100" fill="#4682B4" fill-opacity="0.3" stroke="#003366" stroke-width="3"/>
+                <circle cx="275" cy="220" r="3" fill="#003366"/>
+                <text x="230" y="238" font-size="11" font-weight="bold" fill="#003366">Earth center</text>
+                
+                <!-- Observer point (above surface on top, lower altitude) -->
+                <circle cx="275" cy="115" r="5" fill="red"/>
+                <text x="200" y="105" font-size="13" font-weight="bold" fill="red">Observer (h=2073m)</text>
+                
+                <!-- Peak point (above surface, to the right, HIGHER altitude) -->
+                <circle cx="345" cy="125" r="5" fill="green"/>
+                <text x="350" y="120" font-size="13" font-weight="bold" fill="green">Peak (h=4300m)</text>
+                
+                <!-- TRIANGLE - highlighted with thick lines -->
+                <polygon points="275,220 275,115 345,125" fill="yellow" fill-opacity="0.15" stroke="black" stroke-width="3"/>
+                
+                <!-- Radii to actual observer and peak (R+h) - LABELED -->
+                <line x1="275" y1="220" x2="275" y2="115" stroke="red" stroke-width="3"/>
+                <text x="248" y="165" font-size="11" font-weight="bold" fill="red">RO</text>
+                
+                <line x1="275" y1="220" x2="345" y2="125" stroke="green" stroke-width="3"/>
+                <text x="305" y="180" font-size="11" font-weight="bold" fill="green">RP</text>
+                
+                <!-- Chord distance L -->
+                <line x1="275" y1="115" x2="345" y2="125" stroke="blue" stroke-width="3"/>
+                <text x="305" y="112" font-size="12" font-weight="bold" fill="blue">L</text>
+                
+                <!-- Central angle sigma arc - EMPHASIZED -->
+                <path d="M 275 185 A 35 35 0 0 1 303 200" fill="none" stroke="orange" stroke-width="3"/>
+                <text x="290" y="205" font-size="16" font-weight="bold" fill="orange">σ</text>
+                
+                <!-- Angle alpha at observer - EMPHASIZED -->
+                <path d="M 275 140 L 275 125 A 10 10 0 0 1 283 117" fill="none" stroke="purple" stroke-width="3"/>
+                <text x="283" y="138" font-size="16" font-weight="bold" fill="purple">α</text>
+                
+                <!-- Local horizon lines -->
+                <line x1="195" y1="115" x2="355" y2="115" stroke="red" stroke-width="2" stroke-dasharray="5,5"/>
+                <line x1="290" y1="95" x2="400" y2="155" stroke="green" stroke-width="2" stroke-dasharray="5,5"/>
+              </svg>
+            </div>
+            
+            <strong>LAW OF COSINES in triangle (Center - Observer - Peak):</strong><br>
+            <strong>Step A:</strong> Calculate chord distance L<br>
+            L² = R<sub>O</sub>² + R<sub>P</sub>² - 2·R<sub>O</sub>·R<sub>P</sub>·cos(σ)<br>
+            L = <span id="LDisplay">50,852.0</span> m<br><br>
+            
+            <strong>Step B:</strong> Calculate angle α at observer (Law of Cosines)<br>
+            cos(α) = (R<sub>O</sub>² + L² - R<sub>P</sub>²) / (2·R<sub>O</sub>·L)<br>
+            α = arccos(cos(α)) = <span id="alphaDisplay">92.282°</span><br><br>
+            
+            <strong>Step C:</strong> Apply horizon tilt correction<br>
+            θ = (α - 90°) + σ/2<br>
+            θ = <span id="thetaSphericalDisplay">2.510°</span><br><br>
+            
+            <em>Key insight: On a sphere, local horizons are tilted by σ → Each point contributes σ/2 correction</em><br><br>
             
             <strong>Step 6:</strong> Predict height from this angle<br>
             Δh<sub>predicted</sub> = d × tan(θ)<br>
