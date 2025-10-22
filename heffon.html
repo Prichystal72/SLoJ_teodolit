@@ -618,33 +618,33 @@
             <em>Note: We must account for ALL spherical effects - chord distance, tilt correction, and drop!</em><br><br>
             
             <strong>Step 6a:</strong> Calculate precise drop from Earth's curvature<br>
-            drop = R - √(R² - L²)<br>
-            drop = <span id="radiusDisplay5">6,371,000</span> - √(<span id="radiusDisplay6">6,371,000</span>² - <span id="LDisplay2">50,852</span>²)<br>
-            drop = <span id="dropSphericalDisplay">202.7</span> m<br><br>
+            drop = d² / (2R)<br>
+            drop = <span id="distanceDisplay6a">0</span>² / (2 × <span id="radiusDisplay5">0</span>)<br>
+            drop = <span id="dropSphericalDisplay">0</span> m<br><br>
             
             <strong>Step 6b:</strong> Calculate geometric height from chord and base angle<br>
             h<sub>geometric</sub> = L × tan(α - 90°)<br>
-            h<sub>geometric</sub> = <span id="LDisplay3">50,852</span> × tan(<span id="thetaBaseDisplay2">2.282°</span>)<br>
-            h<sub>geometric</sub> = <span id="hGeometricDisplay">2,026.7</span> m<br><br>
+            h<sub>geometric</sub> = <span id="LDisplay3">0</span> × tan(<span id="thetaBaseDisplay2">0</span>)<br>
+            h<sub>geometric</sub> = <span id="hGeometricDisplay">0</span> m<br><br>
             
             <strong>Step 6c:</strong> Add correction for gravity tilt (σ effect)<br>
             tilt<sub>correction</sub> = L × tan(σ)<br>
-            tilt<sub>correction</sub> = <span id="LDisplay4">50,852</span> × tan(<span id="sigmaDisplay3">0.007970</span>)<br>
-            tilt<sub>correction</sub> = <span id="tiltCorrectionDisplay">405.3</span> m<br><br>
+            tilt<sub>correction</sub> = <span id="LDisplay4">0</span> × tan(<span id="sigmaDisplay3">0</span>)<br>
+            tilt<sub>correction</sub> = <span id="tiltCorrectionDisplay">0</span> m<br><br>
             
             <strong>Step 6d:</strong> Combine all spherical effects<br>
-            Δh<sub>predicted</sub> = h<sub>geometric</sub> + tilt<sub>correction</sub> + drop<br>
-            Δh<sub>predicted</sub> = <span id="hGeometricDisplay2">2,026.7</span> + <span id="tiltCorrectionDisplay2">405.3</span> + <span id="dropSphericalDisplay2">202.7</span><br>
-            Δh<sub>predicted</sub> = <span id="deltaH_Sph_display2">2,634.7</span> m<br><br>
+            Δh<sub>predicted</sub> = h<sub>geometric</sub> + tilt<sub>correction</sub> - drop<br>
+            Δh<sub>predicted</sub> = <span id="hGeometricDisplay2">0</span> + <span id="tiltCorrectionDisplay2">0</span> - <span id="dropSphericalDisplay2">0</span><br>
+            Δh<sub>predicted</sub> = <span id="deltaH_Sph_display2">0</span> m<br><br>
             
-            <em>Actual Δh = <span id="deltaHActual3">2,227</span> m</em><br>
-            <strong>Height error: <span id="errorH_Sph_display">+407.7</span> m</strong><br>
-            <strong>Distance error: <span id="errorD_Sph_display">-7,890</span> m</strong><br><br>
+            <em>Actual Δh = <span id="deltaHActual3">0</span> m</em><br>
+            <strong>Height error: <span id="errorH_Sph_display">0</span> m</strong><br>
+            <strong>Distance error: <span id="errorD_Sph_display">0</span> m</strong><br><br>
             
             <strong>Comparison of predicted vs measured star angle:</strong><br>
-            Predicted star angle: <span id="thetaSphericalDisplay3">2.738°</span><br>
-            Measured star angle: <span id="thetaStarDisplay3">2.5562°</span><br>
-            <strong>Angle error: <span id="angleErrorSph">+0.182°</span></strong>
+            Predicted star angle: <span id="thetaSphericalDisplay3">0</span><br>
+            Measured star angle: <span id="thetaStarDisplay3">0</span><br>
+            <strong>Angle error: <span id="angleErrorSph">0</span></strong>
           </p>
         </div>
       </div>
@@ -740,16 +740,19 @@
     
     // Krok 6: Výpočet předpovězených hodnot pomocí sférické geometrie
     // Vypočítáme pokles (drop) kvůli zakřivení Země - přesný vzorec
-    const drop_spherical = R - Math.sqrt(R*R - L*L);
+    const drop_spherical = (distance * distance) / (2 * R);
+    
+    // Geometrická výška z chord distance a base angle
+    const h_geometric = L * Math.tan(thetaBase);
     
     // Korekce náklonu horizontu kvůli zakřivení
-    const tilt_correction = (hPeak - hObs) * (1 - Math.cos(sigma));
+    const tilt_correction = L * Math.tan(sigma);
     
-    // Predikce podle stejné metody jako Modely 1 a 2, ale se sféricky správným úhlem
-    const deltaH_GE_Spherical = L * Math.tan(thetaGlobeSpherical );
-    const distance_GE_Spherical = L / Math.cos(thetaGlobeSpherical );
+    // Kombinace všech sférických efektů
+    const deltaH_GE_Spherical = h_geometric + tilt_correction + drop_spherical;
+    const distance_GE_Spherical = L / Math.cos(thetaGlobeSpherical);
 
-    const errorH_GE_Spherical = deltaH_GE_Spherical - deltaH - drop_spherical - tilt_correction;
+    const errorH_GE_Spherical = deltaH_GE_Spherical - deltaH;
     const errorD_GE_Spherical = distance_GE_Spherical - distance;
     
     // Ale pro porovnání úhlů používáme STAR úhel (s korekcí)
@@ -870,7 +873,6 @@
     
     // Model 3: Spherical
     document.getElementById('distanceDisplay5').textContent = distance.toLocaleString();
-    document.getElementById('distanceDisplay6').textContent = distance.toLocaleString();
     document.getElementById('radiusDisplay2').textContent = R.toLocaleString();
     document.getElementById('radiusDisplay3').textContent = R.toLocaleString();
     document.getElementById('radiusDisplay4').textContent = R.toLocaleString();
@@ -899,25 +901,23 @@
     document.getElementById('thetaBaseDisplay2').textContent = (thetaBaseValue * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('sigmaCorrectionDisplay').textContent = (sigma * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('thetaSphericalDisplay').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
-    document.getElementById('thetaSphericalDisplay2').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('thetaSphericalDisplay3').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('thetaStarDisplay3').textContent = thetaStar.toFixed(4) + '°';
     
     // Nové hodnoty pro Step 6 - sférické výpočty
     document.getElementById('radiusDisplay5').textContent = R.toLocaleString();
-    document.getElementById('radiusDisplay6').textContent = R.toLocaleString();
-    document.getElementById('LDisplay2').textContent = L.toFixed(1);
+    document.getElementById('distanceDisplay6a').textContent = distance.toLocaleString();
     document.getElementById('LDisplay3').textContent = L.toFixed(1);
     document.getElementById('LDisplay4').textContent = L.toFixed(1);
     document.getElementById('sigmaDisplay3').textContent = sigma.toFixed(6);
     
     // Použijeme již vypočítané hodnoty z kroku 6
-    document.getElementById('dropSphericalDisplay').textContent = drop_spherical.toFixed(1);
-    document.getElementById('dropSphericalDisplay2').textContent = drop_spherical.toFixed(1);
-    document.getElementById('hGeometricDisplay').textContent = h_geometric.toFixed(1);
-    document.getElementById('hGeometricDisplay2').textContent = h_geometric.toFixed(1);
-    document.getElementById('tiltCorrectionDisplay').textContent = tilt_correction.toFixed(1);
-    document.getElementById('tiltCorrectionDisplay2').textContent = tilt_correction.toFixed(1);
+    document.getElementById('dropSphericalDisplay').textContent = isNaN(drop_spherical) ? 'NaN' : drop_spherical.toFixed(1);
+    document.getElementById('dropSphericalDisplay2').textContent = isNaN(drop_spherical) ? 'NaN' : drop_spherical.toFixed(1);
+    document.getElementById('hGeometricDisplay').textContent = isNaN(h_geometric) ? 'NaN' : h_geometric.toFixed(1);
+    document.getElementById('hGeometricDisplay2').textContent = isNaN(h_geometric) ? 'NaN' : h_geometric.toFixed(1);
+    document.getElementById('tiltCorrectionDisplay').textContent = isNaN(tilt_correction) ? 'NaN' : tilt_correction.toFixed(1);
+    document.getElementById('tiltCorrectionDisplay2').textContent = isNaN(tilt_correction) ? 'NaN' : tilt_correction.toFixed(1);
     
     document.getElementById('deltaH_Sph_display2').textContent = deltaH_GE_Spherical.toFixed(0);
     document.getElementById('deltaHActual3').textContent = deltaH.toLocaleString();
@@ -932,9 +932,6 @@
     document.getElementById('errorH_Sph_summary').textContent = (errorH_GE_Spherical > 0 ? '+' : '') + errorH_GE_Spherical.toFixed(0);
     document.getElementById('errorH_FE_summary').textContent = (errorH_FE > 0 ? '+' : '') + errorH_FE.toFixed(0);
     document.getElementById('errorH_Heffron_summary').textContent = (errorH_GE_Heffron > 0 ? '+' : '') + errorH_GE_Heffron.toFixed(0);
-    document.getElementById('angleErrorSph_summary').textContent = (angleErrorSpherical > 0 ? '+' : '') + angleErrorSpherical.toFixed(3) + '°';
-    document.getElementById('angleErrorFE_summary').textContent = angleErrorFE.toFixed(3) + '°';
-    document.getElementById('angleErrorHeffron_summary').textContent = (angleErrorHeffron > 0 ? '+' : '') + angleErrorHeffron.toFixed(3) + '°';
   }
 
   // Run on load
