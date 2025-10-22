@@ -742,18 +742,14 @@
     // Vypočítáme pokles (drop) kvůli zakřivení Země - přesný vzorec
     const drop_spherical = R - Math.sqrt(R*R - L*L);
     
-    // Předpokládaná výška hory podle sférického modelu:
-    // 1. Geometrická výška z chord distance a base úhlu
-    // 2. Plus korekce na natočení tížnice (sigma)
-    // 3. Plus pokles kvůli zakřivení
-    const h_geometric = L * Math.tan(thetaBase);
-    const tilt_correction = L * Math.tan(sigma);
-    const deltaH_GE_Spherical = h_geometric + tilt_correction + drop_spherical;
+    // Korekce náklonu horizontu kvůli zakřivení
+    const tilt_correction = (hPeak - hObs) * (1 - Math.cos(sigma));
     
-    // Předpokládaná vzdálenost (zpětný výpočet)
-    const distance_GE_Spherical = deltaH / Math.tan(thetaBase);
-    
-    const errorH_GE_Spherical = deltaH_GE_Spherical - deltaH;
+    // Predikce podle stejné metody jako Modely 1 a 2, ale se sféricky správným úhlem
+    const deltaH_GE_Spherical = L * Math.tan(thetaGlobeSpherical );
+    const distance_GE_Spherical = L / Math.cos(thetaGlobeSpherical );
+
+    const errorH_GE_Spherical = deltaH_GE_Spherical - deltaH - drop_spherical - tilt_correction;
     const errorD_GE_Spherical = distance_GE_Spherical - distance;
     
     // Ale pro porovnání úhlů používáme STAR úhel (s korekcí)
