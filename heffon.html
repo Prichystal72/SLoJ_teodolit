@@ -371,11 +371,19 @@
           
           <p><strong>Formula:</strong></p>
           <p style="margin-left: 20px; font-family: 'Courier New', monospace;">
-            θ<sub>FE</sub> = θ<sub>star</sub> = <span id="thetaStarDisplay">2.5562°</span><br>
+            θ<sub>FE</sub> = θ<sub>star</sub> = <span id="thetaStarDisplay">0</span><br><br>
+            
+            <strong>Height prediction:</strong><br>
             Δh<sub>predicted</sub> = d × tan(θ<sub>star</sub>)<br>
-            Δh<sub>predicted</sub> = <span id="distanceDisplay">50,778</span> × tan(2.5562°) = <span id="deltaH_FE_display">2,266.9</span> m<br><br>
-            <em>Actual Δh = <span id="deltaHActual">2,227</span> m</em><br>
-            <strong>❌ Error = <span id="errorH_FE_display">+39.9</span> m (overpredicts!)</strong>
+            Δh<sub>predicted</sub> = <span id="distanceDisplay">0</span> × tan(<span id="thetaStarDisplay2">0</span>) = <span id="deltaH_FE_display">0</span> m<br>
+            <em>Actual Δh = <span id="deltaHActual">0</span> m</em><br>
+            <strong>Height error = <span id="errorH_FE_display">0</span> m</strong><br><br>
+            
+            <strong>Distance prediction:</strong><br>
+            d<sub>predicted</sub> = Δh / tan(θ<sub>star</sub>)<br>
+            d<sub>predicted</sub> = <span id="deltaHActual_FE">0</span> / tan(<span id="thetaStarDisplay_FE">0</span>) = <span id="distance_FE_display">0</span> m<br>
+            <em>Actual d = <span id="distanceActual_FE">0</span> m</em><br>
+            <strong>Distance error = <span id="errorD_FE_display">0</span> m</strong>
           </p>
           <p style="margin-top: 10px; font-size: 13px;">
             <strong>⚠️ Problem:</strong> Ignores Earth's curvature completely. Works only for very short distances.
@@ -429,19 +437,33 @@
           
           <p><strong>Formulas:</strong></p>
           <p style="margin-left: 20px; font-family: 'Courier New', monospace;">
+            <strong>Step 1: Calculate drop</strong><br>
             drop = d² / (2R)<br>
-            drop = <span id="distanceDisplay2">50,778</span>² / (2 × <span id="radiusDisplay">6,371,000</span>) = <span id="dropDisplay">202.4</span> m<br><br>
+            drop = <span id="distanceDisplay2">0</span>² / (2 × <span id="radiusDisplay">0</span>) = <span id="dropDisplay">0</span> m<br><br>
+            
+            <strong>Step 2: Calculate angle</strong><br>
             θ<sub>Heffron</sub> = arctan((Δh - drop) / d)<br>
-            θ<sub>Heffron</sub> = arctan((<span id="deltaHActual2">2,227</span> - 202.4) / 50,778)<br>
-            θ<sub>Heffron</sub> = arctan(2,024.6 / 50,778) = <span id="thetaHeffronDisplay">2.283°</span><br><br>
-            <strong>❌ Error = -202 m (massively underpredicts!)</strong>
+            θ<sub>Heffron</sub> = arctan((<span id="deltaHActual2">0</span> - <span id="dropDisplay2">0</span>) / <span id="distanceDisplay3">0</span>)<br>
+            θ<sub>Heffron</sub> = arctan(<span id="deltaHMinusDrop">0</span> / <span id="distanceDisplay4">0</span>) = <span id="thetaHeffronDisplay">0</span><br><br>
+            
+            <strong>Step 3: Height prediction</strong><br>
+            Δh<sub>predicted</sub> = d × tan(θ<sub>Heffron</sub>)<br>
+            Δh<sub>predicted</sub> = <span id="distanceDisplay_Heffron">0</span> × tan(<span id="thetaHeffronDisplay2">0</span>) = <span id="deltaH_Heffron_display">0</span> m<br>
+            <em>Actual Δh = <span id="deltaHActual_Heffron">0</span> m</em><br>
+            <strong>Height error = <span id="errorH_Heffron_display">0</span> m</strong><br><br>
+            
+            <strong>Step 4: Distance prediction</strong><br>
+            d<sub>predicted</sub> = Δh / tan(θ<sub>Heffron</sub>)<br>
+            d<sub>predicted</sub> = <span id="deltaHActual_Heffron2">0</span> / tan(<span id="thetaHeffronDisplay3">0</span>) = <span id="distance_Heffron_display">0</span> m<br>
+            <em>Actual d = <span id="distanceActual_Heffron">0</span> m</em><br>
+            <strong>Distance error = <span id="errorD_Heffron_display">0</span> m</strong>
           </p>
           <p style="margin-top: 10px; font-size: 13px; background: #ffebee; padding: 10px; border-radius: 4px;">
             <strong>⚠️ CRITICAL PROBLEM:</strong> Uses arc distance 'd' (measured along curved surface) 
             in arctan formula that requires a STRAIGHT line distance! This is like using a tape measure 
             that bends around the Earth's curve, but treating it as if it were stretched tight. 
             The formula also ignores that local horizons are tilted on a sphere. 
-            <strong>Systematically underestimates angles by ~0.27°!</strong>
+            <strong>Systematically underestimates angles by ~<span id="angleUnderestimate">0</span>°!</strong>
           </p>
         </div>
       </div>
@@ -453,17 +475,17 @@
           <p><strong>Formulas:</strong></p>
           <p style="margin-left: 20px; font-family: 'Courier New', monospace;">
             <strong>Step 1:</strong> Calculate central angle<br>
-            σ = d / R = 50,778 / 6,371,000 = <span id="sigmaDisplay">0.007970</span> rad<br><br>
+            σ = d / R = <span id="distanceDisplay5">50,778</span> / <span id="radiusDisplay2">6,371,000</span> = <span id="sigmaDisplay">0.007970</span> rad<br><br>
             
             <strong>Step 2:</strong> Calculate distances from Earth's center<br>
-            R<sub>O</sub> = R + h<sub>obs</sub> = 6,371,000 + 2,073 = <span id="RODisplay">6,373,073</span> m<br>
-            R<sub>P</sub> = R + h<sub>peak</sub> = 6,371,000 + 4,300 = <span id="RPDisplay">6,375,300</span> m<br><br>
+            R<sub>O</sub> = R + h<sub>obs</sub> = <span id="radiusDisplay3">6,371,000</span> + <span id="hObsDisplay">2,073</span> = <span id="RODisplay">6,373,073</span> m<br>
+            R<sub>P</sub> = R + h<sub>peak</sub> = <span id="radiusDisplay4">6,371,000</span> + <span id="hPeakDisplay">4,300</span> = <span id="RPDisplay">6,375,300</span> m<br><br>
             
             <strong>Step 3:</strong> Calculate CHORD distance (Law of Cosines)<br>
             L = √(R<sub>O</sub>² + R<sub>P</sub>² - 2·R<sub>O</sub>·R<sub>P</sub>·cos(σ))<br>
-            L = √(6,373,073² + 6,375,300² - 2×6,373,073×6,375,300×cos(0.007970))<br>
+            L = √(<span id="RODisplay2">6,373,073</span>² + <span id="RPDisplay2">6,375,300</span>² - 2×<span id="RODisplay3">6,373,073</span>×<span id="RPDisplay3">6,375,300</span>×cos(<span id="sigmaDisplay2">0.007970</span>))<br>
             L = <span id="LDisplay">50,852.0</span> m<br>
-            <em>(Note: 74 m longer than arc distance!)</em><br><br>
+            <em>(Note: <span id="chordArcDiff">74</span> m longer than arc distance!)</em><br><br>
             
             <strong>Step 4:</strong> Calculate angle α at observer (Law of Cosines)<br>
             cos(α) = (R<sub>O</sub>² + L² - R<sub>P</sub>²) / (2·R<sub>O</sub>·L)<br>
@@ -471,54 +493,113 @@
             
             <strong>Step 5:</strong> Correct for horizon "tilt" due to curvature<br>
             On a sphere, local horizons at observer and peak are tilted by σ<br>
-            Base elevation angle: α - 90° = <span id="thetaBaseDisplay">2.282°</span><br>
-            Correction for tilt: +σ/2 = +<span id="sigmaCorrectionDisplay">0.228°</span><br>
-            <strong>Final elevation angle: θ = (α - 90°) + σ/2 = <span id="thetaSphericalDisplay">2.510°</span></strong><br><br>
+            Base elevation angle (to peak): α - 90° = <span id="thetaBaseDisplay">2.282°</span><br>
+            Correction for star observation: +σ = +<span id="sigmaCorrectionDisplay">0.457°</span><br>
+            <strong>Star elevation angle: θ<sub>star</sub> = (α - 90°) + σ = <span id="thetaSphericalDisplay">2.738°</span></strong><br><br>
             
-            <div style="text-align: center; margin: 20px 0;">
-              <svg width="550" height="300" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid #ccc; background: #f9f9f9;">
-                <!-- Earth circle (surface) -->
-                <circle cx="275" cy="220" r="100" fill="#4682B4" fill-opacity="0.3" stroke="#003366" stroke-width="3"/>
-                <circle cx="275" cy="220" r="3" fill="#003366"/>
-                <text x="230" y="238" font-size="11" font-weight="bold" fill="#003366">Earth center</text>
-                
-                <!-- Observer point (above surface on top, lower altitude) -->
-                <circle cx="275" cy="115" r="5" fill="red"/>
-                <text x="200" y="105" font-size="13" font-weight="bold" fill="red">Observer (h=2073m)</text>
-                
-                <!-- Peak point (above surface, to the right, HIGHER altitude) -->
-                <circle cx="345" cy="125" r="5" fill="green"/>
-                <text x="350" y="120" font-size="13" font-weight="bold" fill="green">Peak (h=4300m)</text>
-                
-                <!-- TRIANGLE - highlighted with thick lines -->
-                <polygon points="275,220 275,115 345,125" fill="yellow" fill-opacity="0.15" stroke="black" stroke-width="3"/>
-                
-                <!-- Radii to actual observer and peak (R+h) - LABELED -->
-                <line x1="275" y1="220" x2="275" y2="115" stroke="red" stroke-width="3"/>
-                <text x="248" y="165" font-size="11" font-weight="bold" fill="red">RO</text>
-                
-                <line x1="275" y1="220" x2="345" y2="125" stroke="green" stroke-width="3"/>
-                <text x="305" y="180" font-size="11" font-weight="bold" fill="green">RP</text>
-                
-                <!-- Chord distance L -->
-                <line x1="275" y1="115" x2="345" y2="125" stroke="blue" stroke-width="3"/>
-                <text x="305" y="112" font-size="12" font-weight="bold" fill="blue">L</text>
-                
-                <!-- Central angle sigma arc - EMPHASIZED -->
-                <path d="M 275 185 A 35 35 0 0 1 303 200" fill="none" stroke="orange" stroke-width="3"/>
-                <text x="290" y="205" font-size="16" font-weight="bold" fill="orange">σ</text>
-                
-                <!-- Angle alpha at observer - EMPHASIZED -->
-                <path d="M 275 140 L 275 125 A 10 10 0 0 1 283 117" fill="none" stroke="purple" stroke-width="3"/>
-                <text x="283" y="138" font-size="16" font-weight="bold" fill="purple">α</text>
-                
-                <!-- Local horizon lines -->
-                <line x1="195" y1="115" x2="355" y2="115" stroke="red" stroke-width="2" stroke-dasharray="5,5"/>
-                <line x1="290" y1="95" x2="400" y2="155" stroke="green" stroke-width="2" stroke-dasharray="5,5"/>
-              </svg>
-            </div>
-            
-            <strong>LAW OF COSINES in triangle (Center - Observer - Peak):</strong><br>
+          <div style="text-align: center; margin: 20px 0;">
+            <svg width="550" height="300" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid #ccc; background: #f9f9f9;">
+              <!-- Earth circle (surface) -->
+              <circle cx="275" cy="220" r="100" fill="#4682B4" fill-opacity="0.3" stroke="#003366" stroke-width="3"/>
+              <circle cx="275" cy="220" r="3" fill="#003366"/>
+              <text x="230" y="238" font-size="11" font-weight="bold" fill="#003366">Earth center</text>
+              
+              <!-- Observer point (above surface on top, lower altitude) -->
+              <circle cx="275" cy="115" r="5" fill="red"/>
+              <text x="200" y="105" font-size="13" font-weight="bold" fill="red">A</text>
+              
+              <!-- Peak point (above surface, to the right, HIGHER altitude) -->
+              <circle cx="345" cy="125" r="5" fill="green"/>
+              <text x="350" y="120" font-size="13" font-weight="bold" fill="green">B</text>
+              
+              <!-- TRIANGLE - highlighted with thick lines -->
+              <polygon points="275,220 275,115 345,125" fill="yellow" fill-opacity="0.15" stroke="black" stroke-width="3"/>
+              
+              <!-- Radii to actual observer and peak (R+h) - LABELED -->
+              <line x1="275" y1="220" x2="275" y2="115" stroke="red" stroke-width="3"/>
+              <text x="248" y="165" font-size="11" font-weight="bold" fill="red">RO</text>
+              
+              <line x1="275" y1="220" x2="345" y2="125" stroke="green" stroke-width="3"/>
+              <text x="310" y="180" font-size="11" font-weight="bold" fill="green">RP</text>
+              
+              <!-- Chord distance L -->
+              <line x1="275" y1="115" x2="345" y2="125" stroke="blue" stroke-width="3"/>
+              <text x="305" y="112" font-size="12" font-weight="bold" fill="blue">L</text>
+              
+              <!-- Central angle sigma arc - EMPHASIZED -->
+              <path d="M 275 185 A 35 35 0 0 1 303 200" fill="none" stroke="orange" stroke-width="3"/>
+              <text x="290" y="205" font-size="16" font-weight="bold" fill="orange">σ</text>
+              
+              <!-- Angle alpha at observer - EMPHASIZED -->
+              <path d="M 275 140 L 275 125 A 10 10 0 0 1 283 117" fill="none" stroke="purple" stroke-width="3"/>
+              <text x="283" y="138" font-size="16" font-weight="bold" fill="purple">α</text>
+              
+              <!-- Local horizon lines -->
+              <line x1="195" y1="115" x2="355" y2="115" stroke="red" stroke-width="2" stroke-dasharray="5,5"/>
+              <line x1="290" y1="95" x2="400" y2="155" stroke="green" stroke-width="2" stroke-dasharray="5,5"/>
+            </svg>
+            <p style="margin-top: 10px; font-size: 12px; color: #666;">
+              <em>Illustration: Spherical triangle geometry with proper chord distance calculation</em>
+            </p>
+          </div>
+          
+          <!-- New detailed view showing curved surface with correct horizon lines -->
+          <div style="text-align: center; margin: 30px 0;">
+            <svg width="600" height="300" xmlns="http://www.w3.org/2000/svg" style="border: 1px solid #ccc; background: #f9f9f9;">
+              <!-- Curved Earth surface (arc segment) - much larger radius = very gentle curve -->
+              <path d="M 50 250 Q 300 230 550 250" fill="none" stroke="#8B4513" stroke-width="6"/>
+              <text x="250" y="280" font-size="12" fill="#666" font-weight="bold">Curved Earth Surface (large radius - very gentle curve)</text>
+              
+              <!-- Observer point on the curve (keeping original position) -->
+              <circle cx="160" cy="220" r="6" fill="red"/>
+              <text x="100" y="190" font-size="14" font-weight="bold" fill="red">Observer</text>
+              <text x="105" y="205" font-size="11" fill="red">(h = 2073 m)</text>
+              
+              <!-- Peak point on the curve (keeping original position) -->
+              <circle cx="440" cy="190" r="6" fill="green"/>
+              <text x="450" y="160" font-size="14" font-weight="bold" fill="green">Peak</text>
+              <text x="455" y="175" font-size="11" fill="green">(h = 4300 m)</text>
+              
+              <!-- Radius lines from center to observer and peak -->
+              <line x1="300" y1="5230" x2="160" y2="220" stroke="black" stroke-width="1" opacity="0.5"/>
+              <line x1="300" y1="5230" x2="440" y2="190" stroke="black" stroke-width="1" opacity="0.5"/>
+              
+              <!-- Line of sight (chord) - from observer to peak -->
+              <line x1="160" y1="220" x2="440" y2="190" stroke="blue" stroke-width="3"/>
+              <text x="245" y="190" font-size="12" font-weight="bold" fill="blue">Line of sight (L)</text>
+              
+              <!-- CORRECT local horizon for Observer - tangent to very gentle curve at observer position -->
+              <line x1="60" y1="223" x2="260" y2="219" stroke="red" stroke-width="2" stroke-dasharray="8,4"/>
+              <text x="20" y="234" font-size="11" fill="red" font-weight="bold">Observer's local horizon</text>
+              
+              <!-- CORRECT local horizon for Peak - tangent to very gentle curve at peak position -->
+              <line x1="340" y1="188" x2="540" y2="192" stroke="green" stroke-width="2" stroke-dasharray="8,4"/>
+              <text x="480" y="210" font-size="11" fill="green" font-weight="bold">Peak's local horizon</text>
+              
+              <!-- Arc distance annotation along the very gentle curve -->
+              <path d="M 160 230.3 Q 300 223 440 230.3" fill="none" stroke="orange" stroke-width="2" stroke-dasharray="3,3"/>
+              <text x="280" y="255" font-size="11" fill="orange" font-weight="bold">Arc distance (d)</text>
+              
+              <!-- Arrow markers -->
+              <defs>
+                <marker id="arrowred" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="red"/>
+                </marker>
+                <marker id="arrowgreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="green"/>
+                </marker>
+              </defs>
+              
+              <!-- Key insight box -->
+              <rect x="20" y="20" width="560" height="60" fill="#fff3cd" stroke="#ff9800" stroke-width="2" rx="5"/>
+              <text x="30" y="37" font-size="12" font-weight="bold" fill="#d32f2f">🔑 KEY INSIGHT (Doubled Radius):</text>
+              <text x="30" y="52" font-size="11" fill="#333">With gentler Earth curvature, observer's horizon clearly passes UNDER the peak</text>
+              <text x="30" y="67" font-size="11" fill="#333">This demonstrates why the σ correction is needed for proper spherical trigonometry</text>
+            </svg>
+            <p style="margin-top: 10px; font-size: 12px; color: #666;">
+              <em>Detail view: Doubled radius shows how local horizons create elevation angle corrections on curved surfaces</em>
+            </p>
+          </div>            <strong>LAW OF COSINES in triangle (Center - Observer - Peak):</strong><br>
             <strong>Step A:</strong> Calculate chord distance L<br>
             L² = R<sub>O</sub>² + R<sub>P</sub>² - 2·R<sub>O</sub>·R<sub>P</sub>·cos(σ)<br>
             L = <span id="LDisplay">50,852.0</span> m<br><br>
@@ -528,31 +609,59 @@
             α = arccos(cos(α)) = <span id="alphaDisplay">92.282°</span><br><br>
             
             <strong>Step C:</strong> Apply horizon tilt correction<br>
-            θ = (α - 90°) + σ/2<br>
-            θ = <span id="thetaSphericalDisplay">2.510°</span><br><br>
+            θ<sub>star</sub> = (α - 90°) + σ<br>
+            θ<sub>star</sub> = <span id="thetaSphericalDisplay">2.738°</span><br><br>
             
-            <em>Key insight: On a sphere, local horizons are tilted by σ → Each point contributes σ/2 correction</em><br><br>
+            <em>Key insight: On a sphere, local horizons are tilted by the FULL central angle σ</em><br><br>
             
-            <strong>Step 6:</strong> Predict height from this angle<br>
-            Δh<sub>predicted</sub> = d × tan(θ)<br>
-            Δh<sub>predicted</sub> = 50,778 × tan(2.510°) = <span id="deltaH_Sph_display2">2,226</span> m<br><br>
+            <strong>Step 6:</strong> Predict height using COMPLETE spherical geometry<br>
+            <em>Note: We must account for ALL spherical effects - chord distance, tilt correction, and drop!</em><br><br>
             
-            <em>Actual Δh = 2,227 m</em><br>
-            <strong>✓ Height error: <span id="errorH_Sph_display">-1</span> m (nearly perfect!)</strong><br>
-            <strong>Distance error: <span id="errorD_Sph_display">-34</span> m</strong>
+            <strong>Step 6a:</strong> Calculate precise drop from Earth's curvature<br>
+            drop = R - √(R² - L²)<br>
+            drop = <span id="radiusDisplay5">6,371,000</span> - √(<span id="radiusDisplay6">6,371,000</span>² - <span id="LDisplay2">50,852</span>²)<br>
+            drop = <span id="dropSphericalDisplay">202.7</span> m<br><br>
+            
+            <strong>Step 6b:</strong> Calculate geometric height from chord and base angle<br>
+            h<sub>geometric</sub> = L × tan(α - 90°)<br>
+            h<sub>geometric</sub> = <span id="LDisplay3">50,852</span> × tan(<span id="thetaBaseDisplay2">2.282°</span>)<br>
+            h<sub>geometric</sub> = <span id="hGeometricDisplay">2,026.7</span> m<br><br>
+            
+            <strong>Step 6c:</strong> Add correction for gravity tilt (σ effect)<br>
+            tilt<sub>correction</sub> = L × tan(σ)<br>
+            tilt<sub>correction</sub> = <span id="LDisplay4">50,852</span> × tan(<span id="sigmaDisplay3">0.007970</span>)<br>
+            tilt<sub>correction</sub> = <span id="tiltCorrectionDisplay">405.3</span> m<br><br>
+            
+            <strong>Step 6d:</strong> Combine all spherical effects<br>
+            Δh<sub>predicted</sub> = h<sub>geometric</sub> + tilt<sub>correction</sub> + drop<br>
+            Δh<sub>predicted</sub> = <span id="hGeometricDisplay2">2,026.7</span> + <span id="tiltCorrectionDisplay2">405.3</span> + <span id="dropSphericalDisplay2">202.7</span><br>
+            Δh<sub>predicted</sub> = <span id="deltaH_Sph_display2">2,634.7</span> m<br><br>
+            
+            <em>Actual Δh = <span id="deltaHActual3">2,227</span> m</em><br>
+            <strong>Height error: <span id="errorH_Sph_display">+407.7</span> m</strong><br>
+            <strong>Distance error: <span id="errorD_Sph_display">-7,890</span> m</strong><br><br>
+            
+            <strong>Comparison of predicted vs measured star angle:</strong><br>
+            Predicted star angle: <span id="thetaSphericalDisplay3">2.738°</span><br>
+            Measured star angle: <span id="thetaStarDisplay3">2.5562°</span><br>
+            <strong>Angle error: <span id="angleErrorSph">+0.182°</span></strong>
           </p>
         </div>
       </div>
 
       <div class="notes">
         <strong>🔍 Key Finding:</strong><br>
-        The <strong>Globe Earth (Spherical)</strong> model with proper spherical trigonometry is <strong>MOST ACCURATE</strong>!<br>
-        • <strong>Spherical (with σ/2 correction):</strong> Height error ~-1 m ✓<br>
-        • <strong>Flat Earth:</strong> Height error ~+40 m (10% off)<br>
-        • <strong>Heffron approximation:</strong> Height error ~-202 m (50% off!)<br><br>
+        Comparison of all three models based on height prediction accuracy:<br>
+        • <strong>Flat Earth:</strong> Height error = <span id="errorH_FE_summary">+40</span> m (ignores curvature completely)<br>
+        • <strong>Heffron approximation:</strong> Height error = <span id="errorH_Heffron_summary">-202</span> m (uses arc distance incorrectly, ignores tilt)<br>
+        • <strong>Spherical (COMPLETE):</strong> Height error = <span id="errorH_Sph_summary">+408</span> m<br><br>
+        
+        <strong>⚠️ Analysis:</strong> The spherical model with ALL corrections (chord distance L, tilt correction σ, and precise drop) 
+        appears to overestimate. This suggests we need to reconsider how these corrections combine.<br><br>
+        
         The critical insight: On a sphere, local horizons are "tilted" by the central angle σ.<br>
-        The correct formula includes the correction: θ = (α - 90°) + σ/2<br>
-        The Heffron approximation <strong>completely ignores</strong> this geometric effect!
+        The correct formula includes: θ<sub>star</sub> = (α - 90°) + σ<br>
+        The Heffron approximation <strong>completely ignores</strong> the tilt correction!
       </div>
     </section>
 
@@ -623,24 +732,35 @@
     const alpha = Math.acos(Math.max(-1, Math.min(1, cosAlpha)));
     
     // Krok 5: Korekce na "natočení" kvůli zakřivení
-    // Na kouli jsou lokální horizontály pozorovatele a vrcholu natočené o úhel σ
-    // Pozorovatel má horizont "natočený" jedním směrem
-    // Vrchol má horizont "natočený" druhým směrem
-    // Celková korekce = σ/2 (polovina středového úhlu)
-    // 
-    // Elevační úhel = (α - 90°) + σ/2
-    const thetaGlobeSpherical = alpha - Math.PI/2 + sigma/2;
+    // Base angle to peak (no correction)
+    const thetaBase = alpha - Math.PI/2;
     
-    // Krok 6: Výpočet předpovězených hodnot
-    // Model předpoví výšku a vzdálenost na základě skutečné geometrie koule
-    const deltaH_GE_Spherical = distance * Math.tan(thetaGlobeSpherical);
-    const distance_GE_Spherical = deltaH / Math.tan(thetaGlobeSpherical);
+    // Star angle with horizon tilt correction - PLNÝ úhel σ
+    const thetaGlobeSpherical = alpha - Math.PI/2 + sigma;
+    
+    // Krok 6: Výpočet předpovězených hodnot pomocí sférické geometrie
+    // Vypočítáme pokles (drop) kvůli zakřivení Země - přesný vzorec
+    const drop_spherical = R - Math.sqrt(R*R - L*L);
+    
+    // Předpokládaná výška hory podle sférického modelu:
+    // 1. Geometrická výška z chord distance a base úhlu
+    // 2. Plus korekce na natočení tížnice (sigma)
+    // 3. Plus pokles kvůli zakřivení
+    const h_geometric = L * Math.tan(thetaBase);
+    const tilt_correction = L * Math.tan(sigma);
+    const deltaH_GE_Spherical = h_geometric + tilt_correction + drop_spherical;
+    
+    // Předpokládaná vzdálenost (zpětný výpočet)
+    const distance_GE_Spherical = deltaH / Math.tan(thetaBase);
     
     const errorH_GE_Spherical = deltaH_GE_Spherical - deltaH;
     const errorD_GE_Spherical = distance_GE_Spherical - distance;
     
+    // Ale pro porovnání úhlů používáme STAR úhel (s korekcí)
+    const angleErrorSpherical = (thetaGlobeSpherical - thetaRad) * 180 / Math.PI;
+
     // VÝSLEDEK:
-    // Tento výpočet používá SPRÁVNOU sférickou geometrii s kosinovou větou
+    // Tento výpočet používá SPRÁVNOU sférovou geometrii s kosinovou větou
     // a zohledňuje "natočení" lokálních horizontů kvůli zakřivení!
     // Očekávaná chyba: ~-1 m (téměř perfektní!)
     // Na rozdíl od Flat Earth (+40 m) a Heffrona (-202 m)    // Evaluation function - zvýšená přesnost pro detekci nejlepšího modelu
@@ -713,36 +833,112 @@
       `;
     });
     
-    // Update formula display values
+    // Update ALL formula display values
+    // Model 1: Flat Earth
     document.getElementById('thetaStarDisplay').textContent = thetaStar.toFixed(4) + '°';
+    document.getElementById('thetaStarDisplay2').textContent = thetaStar.toFixed(4) + '°';
+    document.getElementById('thetaStarDisplay_FE').textContent = thetaStar.toFixed(4) + '°';
     document.getElementById('distanceDisplay').textContent = distance.toLocaleString();
-    document.getElementById('distanceDisplay2').textContent = distance.toLocaleString();
     document.getElementById('deltaH_FE_display').textContent = deltaH_FE.toFixed(1);
     document.getElementById('deltaHActual').textContent = deltaH.toLocaleString();
-    document.getElementById('deltaHActual2').textContent = deltaH.toLocaleString();
+    document.getElementById('deltaHActual_FE').textContent = deltaH.toLocaleString();
+    document.getElementById('distance_FE_display').textContent = distance_FE.toFixed(0);
+    document.getElementById('distanceActual_FE').textContent = distance.toLocaleString();
     document.getElementById('errorH_FE_display').textContent = (errorH_FE > 0 ? '+' : '') + errorH_FE.toFixed(1);
+    document.getElementById('errorD_FE_display').textContent = (errorD_FE > 0 ? '+' : '') + errorD_FE.toFixed(0);
     
+    // Model 2: Heffron
+    document.getElementById('distanceDisplay2').textContent = distance.toLocaleString();
+    document.getElementById('distanceDisplay3').textContent = distance.toLocaleString();
+    document.getElementById('distanceDisplay4').textContent = distance.toLocaleString();
+    document.getElementById('distanceDisplay_Heffron').textContent = distance.toLocaleString();
     document.getElementById('radiusDisplay').textContent = R.toLocaleString();
     document.getElementById('dropDisplay').textContent = drop.toFixed(1);
+    document.getElementById('dropDisplay2').textContent = drop.toFixed(1);
+    document.getElementById('deltaHActual2').textContent = deltaH.toLocaleString();
+    document.getElementById('deltaHActual_Heffron').textContent = deltaH.toLocaleString();
+    document.getElementById('deltaHActual_Heffron2').textContent = deltaH.toLocaleString();
+    document.getElementById('deltaHMinusDrop').textContent = (deltaH - drop).toFixed(1);
     document.getElementById('thetaHeffronDisplay').textContent = (thetaGlobeHeffron * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('thetaHeffronDisplay2').textContent = (thetaGlobeHeffron * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('thetaHeffronDisplay3').textContent = (thetaGlobeHeffron * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('deltaH_Heffron_display').textContent = deltaH_GE_Heffron.toFixed(0);
+    document.getElementById('distance_Heffron_display').textContent = distance_GE_Heffron.toFixed(0);
+    document.getElementById('distanceActual_Heffron').textContent = distance.toLocaleString();
+    document.getElementById('errorH_Heffron_display').textContent = (errorH_GE_Heffron > 0 ? '+' : '') + errorH_GE_Heffron.toFixed(0);
+    document.getElementById('errorD_Heffron_display').textContent = (errorD_GE_Heffron > 0 ? '+' : '') + errorD_GE_Heffron.toFixed(0);
     
+    // Angle underestimation
+    const angleUnderestimate = thetaStar - (thetaGlobeHeffron * 180 / Math.PI);
+    document.getElementById('angleUnderestimate').textContent = angleUnderestimate.toFixed(2);
+    
+    // Model 3: Spherical
+    document.getElementById('distanceDisplay5').textContent = distance.toLocaleString();
+    document.getElementById('distanceDisplay6').textContent = distance.toLocaleString();
+    document.getElementById('radiusDisplay2').textContent = R.toLocaleString();
+    document.getElementById('radiusDisplay3').textContent = R.toLocaleString();
+    document.getElementById('radiusDisplay4').textContent = R.toLocaleString();
+    document.getElementById('hObsDisplay').textContent = hObs.toLocaleString();
+    document.getElementById('hPeakDisplay').textContent = hPeak.toLocaleString();
     document.getElementById('sigmaDisplay').textContent = sigma.toFixed(6);
+    document.getElementById('sigmaDisplay2').textContent = sigma.toFixed(6);
     document.getElementById('RODisplay').textContent = RO.toLocaleString();
+    document.getElementById('RODisplay2').textContent = RO.toLocaleString();
+    document.getElementById('RODisplay3').textContent = RO.toLocaleString();
     document.getElementById('RPDisplay').textContent = RP.toLocaleString();
+    document.getElementById('RPDisplay2').textContent = RP.toLocaleString();
+    document.getElementById('RPDisplay3').textContent = RP.toLocaleString();
     document.getElementById('LDisplay').textContent = L.toFixed(1);
+    
+    const chordArcDiff = L - distance;
+    document.getElementById('chordArcDiff').textContent = chordArcDiff.toFixed(0);
     
     // Pro sférický model musíme přidat nové hodnoty
     const cosAlphaValue = (RO*RO + L*L - RP*RP) / (2 * RO * L);
     const alphaValue = Math.acos(Math.max(-1, Math.min(1, cosAlphaValue)));
-    const thetaBase = alphaValue - Math.PI/2;
+    const thetaBaseValue = alphaValue - Math.PI/2;
     
     document.getElementById('alphaDisplay').textContent = (alphaValue * 180 / Math.PI).toFixed(3) + '°';
-    document.getElementById('thetaBaseDisplay').textContent = (thetaBase * 180 / Math.PI).toFixed(3) + '°';
-    document.getElementById('sigmaCorrectionDisplay').textContent = (sigma/2 * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('thetaBaseDisplay').textContent = (thetaBaseValue * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('thetaBaseDisplay2').textContent = (thetaBaseValue * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('sigmaCorrectionDisplay').textContent = (sigma * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('thetaSphericalDisplay').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('thetaSphericalDisplay2').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('thetaSphericalDisplay3').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
+    document.getElementById('thetaStarDisplay3').textContent = thetaStar.toFixed(4) + '°';
+    
+    // Nové hodnoty pro Step 6 - sférické výpočty
+    document.getElementById('radiusDisplay5').textContent = R.toLocaleString();
+    document.getElementById('radiusDisplay6').textContent = R.toLocaleString();
+    document.getElementById('LDisplay2').textContent = L.toFixed(1);
+    document.getElementById('LDisplay3').textContent = L.toFixed(1);
+    document.getElementById('LDisplay4').textContent = L.toFixed(1);
+    document.getElementById('sigmaDisplay3').textContent = sigma.toFixed(6);
+    
+    // Použijeme již vypočítané hodnoty z kroku 6
+    document.getElementById('dropSphericalDisplay').textContent = drop_spherical.toFixed(1);
+    document.getElementById('dropSphericalDisplay2').textContent = drop_spherical.toFixed(1);
+    document.getElementById('hGeometricDisplay').textContent = h_geometric.toFixed(1);
+    document.getElementById('hGeometricDisplay2').textContent = h_geometric.toFixed(1);
+    document.getElementById('tiltCorrectionDisplay').textContent = tilt_correction.toFixed(1);
+    document.getElementById('tiltCorrectionDisplay2').textContent = tilt_correction.toFixed(1);
+    
     document.getElementById('deltaH_Sph_display2').textContent = deltaH_GE_Spherical.toFixed(0);
+    document.getElementById('deltaHActual3').textContent = deltaH.toLocaleString();
     document.getElementById('errorH_Sph_display').textContent = (errorH_GE_Spherical > 0 ? '+' : '') + errorH_GE_Spherical.toFixed(0);
-    document.getElementById('errorD_Sph_display').textContent = errorD_GE_Spherical.toFixed(0);
+    document.getElementById('errorD_Sph_display').textContent = (errorD_GE_Spherical > 0 ? '+' : '') + errorD_GE_Spherical.toFixed(0);
+    document.getElementById('angleErrorSph').textContent = (angleErrorSpherical > 0 ? '+' : '') + angleErrorSpherical.toFixed(3) + '°';
+    
+    // Summary section - updated to show angle errors
+    const angleErrorFE = 0; // Flat Earth assumes measured angle is correct
+    const angleErrorHeffron = (thetaGlobeHeffron - thetaRad) * 180 / Math.PI;
+    
+    document.getElementById('errorH_Sph_summary').textContent = (errorH_GE_Spherical > 0 ? '+' : '') + errorH_GE_Spherical.toFixed(0);
+    document.getElementById('errorH_FE_summary').textContent = (errorH_FE > 0 ? '+' : '') + errorH_FE.toFixed(0);
+    document.getElementById('errorH_Heffron_summary').textContent = (errorH_GE_Heffron > 0 ? '+' : '') + errorH_GE_Heffron.toFixed(0);
+    document.getElementById('angleErrorSph_summary').textContent = (angleErrorSpherical > 0 ? '+' : '') + angleErrorSpherical.toFixed(3) + '°';
+    document.getElementById('angleErrorFE_summary').textContent = angleErrorFE.toFixed(3) + '°';
+    document.getElementById('angleErrorHeffron_summary').textContent = (angleErrorHeffron > 0 ? '+' : '') + angleErrorHeffron.toFixed(3) + '°';
   }
 
   // Run on load
