@@ -599,43 +599,8 @@
             <p style="margin-top: 10px; font-size: 12px; color: #666;">
               <em>Detail view: Doubled radius shows how local horizons create elevation angle corrections on curved surfaces</em>
             </p>
-          </div>            <strong>LAW OF COSINES in triangle (Center - Observer - Peak):</strong><br>
-            <strong>Step A:</strong> Calculate chord distance L<br>
-            L² = R<sub>O</sub>² + R<sub>P</sub>² - 2·R<sub>O</sub>·R<sub>P</sub>·cos(σ)<br>
-            L = <span id="LDisplay">50,852.0</span> m<br><br>
-            
-            <strong>Step B:</strong> Calculate angle α at observer (Law of Cosines)<br>
-            cos(α) = (R<sub>O</sub>² + L² - R<sub>P</sub>²) / (2·R<sub>O</sub>·L)<br>
-            α = arccos(cos(α)) = <span id="alphaDisplay">92.282°</span><br><br>
-            
-            <strong>Step C:</strong> Apply horizon tilt correction<br>
-            θ<sub>star</sub> = (α - 90°) + σ<br>
-            θ<sub>star</sub> = <span id="thetaSphericalDisplay">2.738°</span><br><br>
-            
-            <em>Key insight: On a sphere, local horizons are tilted by the FULL central angle σ</em><br><br>
-            
-            <strong>Step 6:</strong> Predict height using COMPLETE spherical geometry<br>
+          </div>            <strong>Step 6:</strong> Predict height using COMPLETE spherical geometry<br>
             <em>Note: We must account for ALL spherical effects - chord distance, tilt correction, and drop!</em><br><br>
-            
-            <strong>Step 6a:</strong> Calculate precise drop from Earth's curvature<br>
-            drop = d² / (2R)<br>
-            drop = <span id="distanceDisplay6a">0</span>² / (2 × <span id="radiusDisplay5">0</span>)<br>
-            drop = <span id="dropSphericalDisplay">0</span> m<br><br>
-            
-            <strong>Step 6b:</strong> Calculate geometric height from chord and base angle<br>
-            h<sub>geometric</sub> = L × tan(α - 90°)<br>
-            h<sub>geometric</sub> = <span id="LDisplay3">0</span> × tan(<span id="thetaBaseDisplay2">0</span>)<br>
-            h<sub>geometric</sub> = <span id="hGeometricDisplay">0</span> m<br><br>
-            
-            <strong>Step 6c:</strong> Add correction for gravity tilt (σ effect)<br>
-            tilt<sub>correction</sub> = L × tan(σ)<br>
-            tilt<sub>correction</sub> = <span id="LDisplay4">0</span> × tan(<span id="sigmaDisplay3">0</span>)<br>
-            tilt<sub>correction</sub> = <span id="tiltCorrectionDisplay">0</span> m<br><br>
-            
-            <strong>Step 6d:</strong> Combine all spherical effects<br>
-            Δh<sub>predicted</sub> = h<sub>geometric</sub> + tilt<sub>correction</sub> - drop<br>
-            Δh<sub>predicted</sub> = <span id="hGeometricDisplay2">0</span> + <span id="tiltCorrectionDisplay2">0</span> - <span id="dropSphericalDisplay2">0</span><br>
-            Δh<sub>predicted</sub> = <span id="deltaH_Sph_display2">0</span> m<br><br>
             
             <em>Actual Δh = <span id="deltaHActual3">0</span> m</em><br>
             <strong>Height error: <span id="errorH_Sph_display">0</span> m</strong><br>
