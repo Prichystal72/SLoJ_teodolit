@@ -289,8 +289,12 @@
           <input type="number" id="distance" value="50778" step="1">
         </div>
         <div class="form-group">
-          <label>True Star Angle to Peak (°)</label>
-          <input type="number" id="thetaStar" value="2.5562" step="0.0001">
+          <label>From Heffron to Peak (°)</label>
+          <input type="number" id="thetaHeffronToPeak" value="2.282" step="0.0001">
+        </div>
+        <div class="form-group">
+          <label>From Peak to Star (°)</label>
+          <input type="number" id="thetaPeakToStar" value="2.738" step="0.0001">
         </div>
         <div class="form-group">
           <label>Earth Radius (m)</label>
@@ -371,16 +375,16 @@
           
           <p><strong>Formula:</strong></p>
           <p style="margin-left: 20px; font-family: 'Courier New', monospace;">
-            θ<sub>FE</sub> = θ<sub>star</sub> = <span id="thetaStarDisplay">0</span><br><br>
+            θ<sub>FE</sub> = θ<sub>Heffron</sub> = <span id="thetaStarDisplay">0</span><br><br>
             
             <strong>Height prediction:</strong><br>
-            Δh<sub>predicted</sub> = d × tan(θ<sub>star</sub>)<br>
+            Δh<sub>predicted</sub> = d × tan(θ<sub>Heffron</sub>)<br>
             Δh<sub>predicted</sub> = <span id="distanceDisplay">0</span> × tan(<span id="thetaStarDisplay2">0</span>) = <span id="deltaH_FE_display">0</span> m<br>
             <em>Actual Δh = <span id="deltaHActual">0</span> m</em><br>
             <strong>Height error = <span id="errorH_FE_display">0</span> m</strong><br><br>
             
             <strong>Distance prediction:</strong><br>
-            d<sub>predicted</sub> = Δh / tan(θ<sub>star</sub>)<br>
+            d<sub>predicted</sub> = Δh / tan(θ<sub>Heffron</sub>)<br>
             d<sub>predicted</sub> = <span id="deltaHActual_FE">0</span> / tan(<span id="thetaStarDisplay_FE">0</span>) = <span id="distance_FE_display">0</span> m<br>
             <em>Actual d = <span id="distanceActual_FE">0</span> m</em><br>
             <strong>Distance error = <span id="errorD_FE_display">0</span> m</strong>
@@ -641,15 +645,22 @@
     const hObs = parseFloat(document.getElementById('hObs').value);
     const hPeak = parseFloat(document.getElementById('hPeak').value);
     const distance = parseFloat(document.getElementById('distance').value);
-    const thetaStar = parseFloat(document.getElementById('thetaStar').value); // in degrees
+    const thetaHeffronToPeak = parseFloat(document.getElementById('thetaHeffronToPeak').value); // in degrees
+    const thetaPeakToStar = parseFloat(document.getElementById('thetaPeakToStar').value); // in degrees
     const R = parseFloat(document.getElementById('earthRadius').value);
     
+    // Calculate total angle from Heffron to star (sum of the two angles)
+    const thetaTotal = thetaHeffronToPeak + thetaPeakToStar; // total angle in degrees
     const deltaH = hPeak - hObs;
-    const thetaRad = thetaStar * Math.PI / 180;
+    
+    // For Flat Earth: should use only the angle to peak, no star correction
+    const thetaFlatEarth = thetaHeffronToPeak; // Flat Earth assumes star is at peak
+    const thetaFlatEarthRad = thetaFlatEarth * Math.PI / 180;
+    const thetaTotalRad = thetaTotal * Math.PI / 180;
 
     // === FLAT EARTH MODEL ===
-    const deltaH_FE = distance * Math.tan(thetaRad);
-    const distance_FE = deltaH / Math.tan(thetaRad);
+    const deltaH_FE = distance * Math.tan(thetaFlatEarthRad);
+    const distance_FE = deltaH / Math.tan(thetaFlatEarthRad);
     const errorH_FE = deltaH_FE - deltaH;
     const errorD_FE = distance_FE - distance;
 
@@ -721,7 +732,7 @@
     const errorD_GE_Spherical = distance_GE_Spherical - distance;
     
     // Ale pro porovnání úhlů používáme STAR úhel (s korekcí)
-    const angleErrorSpherical = (thetaGlobeSpherical - thetaRad) * 180 / Math.PI;
+    const angleErrorSpherical = (thetaGlobeSpherical - thetaTotalRad) * 180 / Math.PI;
 
     // VÝSLEDEK:
     // Tento výpočet používá SPRÁVNOU sférovou geometrii s kosinovou větou
@@ -799,9 +810,9 @@
     
     // Update ALL formula display values
     // Model 1: Flat Earth
-    document.getElementById('thetaStarDisplay').textContent = thetaStar.toFixed(4) + '°';
-    document.getElementById('thetaStarDisplay2').textContent = thetaStar.toFixed(4) + '°';
-    document.getElementById('thetaStarDisplay_FE').textContent = thetaStar.toFixed(4) + '°';
+    document.getElementById('thetaStarDisplay').textContent = thetaFlatEarth.toFixed(4) + '°';
+    document.getElementById('thetaStarDisplay2').textContent = thetaFlatEarth.toFixed(4) + '°';
+    document.getElementById('thetaStarDisplay_FE').textContent = thetaFlatEarth.toFixed(4) + '°';
     document.getElementById('distanceDisplay').textContent = distance.toLocaleString();
     document.getElementById('deltaH_FE_display').textContent = deltaH_FE.toFixed(1);
     document.getElementById('deltaHActual').textContent = deltaH.toLocaleString();
@@ -833,7 +844,7 @@
     document.getElementById('errorD_Heffron_display').textContent = (errorD_GE_Heffron > 0 ? '+' : '') + errorD_GE_Heffron.toFixed(0);
     
     // Angle underestimation
-    const angleUnderestimate = thetaStar - (thetaGlobeHeffron * 180 / Math.PI);
+    const angleUnderestimate = thetaTotal - (thetaGlobeHeffron * 180 / Math.PI);
     document.getElementById('angleUnderestimate').textContent = angleUnderestimate.toFixed(2);
     
     // Model 3: Spherical
@@ -867,7 +878,7 @@
     document.getElementById('sigmaCorrectionDisplay').textContent = (sigma * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('thetaSphericalDisplay').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('thetaSphericalDisplay3').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
-    document.getElementById('thetaStarDisplay3').textContent = thetaStar.toFixed(4) + '°';
+    document.getElementById('thetaStarDisplay3').textContent = thetaTotal.toFixed(4) + '°';
     
     // Nové hodnoty pro Step 6 - sférické výpočty
     document.getElementById('radiusDisplay5').textContent = R.toLocaleString();
@@ -892,7 +903,7 @@
     
     // Summary section - updated to show angle errors
     const angleErrorFE = 0; // Flat Earth assumes measured angle is correct
-    const angleErrorHeffron = (thetaGlobeHeffron - thetaRad) * 180 / Math.PI;
+    const angleErrorHeffron = (thetaGlobeHeffron - thetaTotalRad) * 180 / Math.PI;
     
     document.getElementById('errorH_Sph_summary').textContent = (errorH_GE_Spherical > 0 ? '+' : '') + errorH_GE_Spherical.toFixed(0);
     document.getElementById('errorH_FE_summary').textContent = (errorH_FE > 0 ? '+' : '') + errorH_FE.toFixed(0);
