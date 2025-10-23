@@ -324,9 +324,10 @@
       </table>
 
       <div class="notes">
-        <strong>Accuracy Criteria:</strong> 
+        <strong>Basic Model Comparison:</strong> 
         Height error ≤ ±60 m AND Distance error ≤ ±1,609 m → <span class="conclusive">Conclusive</span>.<br>
-        <em>Note: GE-Spherical uses precise spherical trigonometry; GE-Heffron uses simplified drop approximation.</em>
+        <strong>Spherical Model:</strong> Uses complete spherical trigonometry as theoretical baseline for Earth curvature analysis.<br>
+        <em>Legend: 🎯 = Within accuracy limits | 📊 = Best overall accuracy | 🔬 = Theoretical reference</em>
       </div>
     </section>
 
@@ -764,7 +765,7 @@
       return Math.abs(errH) + Math.abs(errD) / 100; // normalizace vzdálenosti
     }
 
-    // Build results
+    // Build results - only basic models for comparison
     const results = [
       {
         name: "Flat Earth (FE)",
@@ -783,24 +784,26 @@
         errD: errorD_GE_Heffron,
         conclusive: isConclusive(errorH_GE_Heffron, errorD_GE_Heffron),
         totalError: getTotalError(errorH_GE_Heffron, errorD_GE_Heffron)
-      },
-      {
-        name: "Globe Earth (Spherical)",
-        predH: deltaH_GE_Spherical,
-        errH: errorH_GE_Spherical,
-        predD: distance,
-        errD: errorD_GE_Spherical,
-        conclusive: isConclusive(errorH_GE_Spherical, errorD_GE_Spherical),
-        totalError: getTotalError(errorH_GE_Spherical, errorD_GE_Spherical)
       }
     ];
     
-    // Najdeme nejpřesnější model
+    // Separate spherical model for detailed analysis
+    const sphericalModel = {
+      name: "Globe Earth (Spherical)",
+      predH: deltaH_GE_Spherical,
+      errH: errorH_GE_Spherical,
+      predD: distance,
+      errD: errorD_GE_Spherical,
+      conclusive: isConclusive(errorH_GE_Spherical, errorD_GE_Spherical),
+      totalError: getTotalError(errorH_GE_Spherical, errorD_GE_Spherical)
+    };
+    
+    // Find best model among basic models only
     const bestModel = results.reduce((best, current) => 
       current.totalError < best.totalError ? current : best
     );
 
-    // Render table
+    // Render table - basic models only
     const tbody = document.getElementById('resultsBody');
     tbody.innerHTML = '';
     
@@ -823,6 +826,38 @@
         <td class="${isBest ? 'conclusive' : 'inconclusive'}">${isBest ? '✓ MOST ACCURATE' : 'Inaccurate'}</td>
       `;
     });
+    
+    // Add separator row
+    const separatorRow = tbody.insertRow();
+    separatorRow.innerHTML = `
+      <td colspan="6" style="border-top: 3px solid #ccc; text-align: center; padding: 10px; font-weight: bold; background: #f8f9fa;">
+        <em>Advanced Spherical Analysis</em>
+      </td>
+    `;
+    
+    // Add spherical model row with special formatting
+    const sphericalRow = tbody.insertRow();
+    sphericalRow.style.backgroundColor = '#e3f2fd';
+    sphericalRow.style.borderLeft = '4px solid #2196f3';
+    
+    // Determine spherical model status based on calculations
+    let sphericalStatus = '';
+    if (Math.abs(sphericalModel.errH) <= 60 && Math.abs(sphericalModel.errD) <= 1609) {
+      sphericalStatus = '🎯 THEORETICAL BASELINE';
+    } else if (sphericalModel.totalError < bestModel.totalError) {
+      sphericalStatus = '📊 MOST ACCURATE';
+    } else {
+      sphericalStatus = '🔬 REFERENCE MODEL';
+    }
+    
+    sphericalRow.innerHTML = `
+      <td><strong>${sphericalModel.name}</strong></td>
+      <td>${sphericalModel.predH.toFixed(1)}</td>
+      <td class="${Math.abs(sphericalModel.errH) <= 60 ? 'conclusive' : 'inconclusive'}">${sphericalModel.errH.toFixed(1)}</td>
+      <td>${sphericalModel.predD.toFixed(0)}</td>
+      <td class="${Math.abs(sphericalModel.errD) <= 1609 ? 'conclusive' : 'inconclusive'}">${sphericalModel.errD.toFixed(0)}</td>
+      <td class="conclusive">${sphericalStatus}</td>
+    `;
     
     // Update ALL formula display values
     // Model 1: Flat Earth
