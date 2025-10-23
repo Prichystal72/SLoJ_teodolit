@@ -604,44 +604,29 @@
             <p style="margin-top: 10px; font-size: 12px; color: #666;">
               <em>Detail view: Doubled radius shows how local horizons create elevation angle corrections on curved surfaces</em>
             </p>
-          </div>            <strong>Step 6A:</strong> Pure height prediction using ONLY spherical geometry<br>
-            <em>Predict visible height using ONLY geometric parameters (no input angles)</em><br>
-            σ = d/R = <span id="sigmaDisplay4">0</span> rad<br>
-            Δh<sub>predicted</sub> = R(1 - cos(σ)) = <span id="radiusDisplay6">0</span> × (1 - cos(<span id="sigmaDisplay5">0</span>))<br>
-            Δh<sub>predicted</sub> = <span id="deltaH_predicted_display">0</span> m<br><br>
+          </div>
+          
+          <p style="margin-left: 20px; font-family: 'Courier New', monospace; margin-top: 20px;">
+            <strong>Step 6: Model 3 Verification (Predicted vs. Measured)</strong><br><br>
             
-            <strong>Step 6B:</strong> Measured height from input angles<br>
-            <em>Calculate observed height using measured angles from input fields</em><br>
-            Δh<sub>measured</sub> = d × tan(θ<sub>total</sub>)<br>
-            Δh<sub>measured</sub> = <span id="distanceDisplay_measured">0</span> × tan(<span id="thetaTotalDisplay">0</span>)<br>
-            Δh<sub>measured</sub> = <span id="deltaH_measured_display">0</span> m<br><br>
+            <strong>6A: Predicted height from spherical geometry:</strong><br>
+            Δh<sub>predicted</sub> = R × (1 - cos(σ))<br>
+            Δh<sub>predicted</sub> = <span id="deltaH_predicted_spherical_display">0</span> m<br><br>
             
-            <em>Actual mountain height Δh = <span id="deltaHActual3">0</span> m</em><br>
-            <strong>Prediction error: <span id="errorH_Sph_display">0</span> m</strong> (predicted vs. actual)<br>
-            <strong>Measurement error: <span id="errorH_measured_display">0</span> m</strong> (measured vs. actual)<br><br>
+            <strong>6B: Measured height from input angles:</strong><br>
+            θ<sub>measured</sub> = θ<sub>peak→star</sub> - θ<sub>Heffron→peak</sub><br>
+            θ<sub>measured</sub> = <span id="thetaPeakToStarDisplay">0</span>° - <span id="thetaHeffronToPeakDisplay">0</span>° = <span id="theta_measured_display">0</span>°<br>
+            Δh<sub>measured</sub> = R × (1 - cos(θ<sub>measured</sub>))<br>
+            Δh<sub>measured</sub> = <span id="deltaH_measured_spherical_display">0</span> m<br><br>
             
-            <strong>Comparison of predicted vs measured star angle:</strong><br>
-            Predicted star angle: <span id="thetaSphericalDisplay3">0</span><br>
-            Measured star angle: <span id="thetaStarDisplay3">0</span><br>
-            <strong>Angle error: <span id="angleErrorSph">0</span></strong>
+            <strong>6C: Errors for Model 3:</strong><br>
+            Height error = Δh<sub>predicted</sub> - Δh<sub>measured</sub> = <span id="errorH_spherical_step6_display">0</span> m<br>
+            Distance consistency check = d<sub>arc</sub> - (R × θ<sub>measured</sub>) = <span id="errorD_spherical_step6_display">0</span> m
           </p>
         </div>
       </div>
 
-      <div class="notes">
-        <strong>🔍 Key Finding:</strong><br>
-        Comparison of all three models based on height prediction accuracy:<br>
-        • <strong>Flat Earth:</strong> Height error = <span id="errorH_FE_summary">+40</span> m (ignores curvature completely)<br>
-        • <strong>Heffron approximation:</strong> Height error = <span id="errorH_Heffron_summary">-202</span> m (uses arc distance incorrectly, ignores tilt)<br>
-        • <strong>Spherical (COMPLETE):</strong> Height error = <span id="errorH_Sph_summary">+408</span> m<br><br>
-        
-        <strong>⚠️ Analysis:</strong> The spherical model with ALL corrections (chord distance L, tilt correction σ, and precise drop) 
-        appears to overestimate. This suggests we need to reconsider how these corrections combine.<br><br>
-        
-        The critical insight: On a sphere, local horizons are "tilted" by the central angle σ.<br>
-        The correct formula includes: θ<sub>star</sub> = (α - 90°) + σ<br>
-        The Heffron approximation <strong>completely ignores</strong> the tilt correction!
-      </div>
+
     </section>
 
     <footer>
@@ -651,6 +636,8 @@
 
   <script>
   function calculate() {
+    console.log("Calculate started");
+    
     // Get inputs
     const hObs = parseFloat(document.getElementById('hObs').value);
     const hPeak = parseFloat(document.getElementById('hPeak').value);
@@ -683,18 +670,7 @@
     const errorD_GE_Heffron = distance_GE_Heffron - distance;
 
     // === GLOBE EARTH - PRECISE SPHERICAL TRIGONOMETRY ===
-    // SPRÁVNÝ výpočet podle sférické geometrie - odhalení chyby v Heffronově aproximaci
-    //
-    // KLÍČOVÝ PROBLÉM s Heffronovou metodou:
-    // - Heffron používá "drop" aproximaci: drop = d²/(2R)
-    // - Pak počítá: θ = arctan((Δh - drop) / d)
-    // - Toto je GEOMETRICKY NEKONZISTENTNÍ, protože:
-    //   * používá obloukovou vzdálenost 'd' jako by to byla přímka
-    //   * nerespektuje, že každý bod na kouli má jinou lokální horizontálu
-    //   * systematicky podhodnocuje úhel, což znevýhodňuje globální model
-    //
-    // SPRÁVNÝ PŘÍSTUP:
-    // Na kouli musíme použít PŘÍMOU vzdálenost (chord) mezi body, ne obloukovou!
+  
     
     // Krok 1: Výpočet středového úhlu σ (úhel u středu Země mezi pozorovatelem a vrcholem)
     const sigma = distance / R; // σ = oblouková_vzdálenost / poloměr_Země
@@ -729,24 +705,34 @@
     // Použijeme jen geometrické parametry: distance, hObs, hPeak, R
     // Správný vzorec pro predikci výšky na kouli: R(1 - cos(σ))
     const deltaH_predicted_spherical = R * (1 - Math.cos(sigma));
-    
-    // Pro display účely: rozložíme to na komponenty
-    const h_geometric = deltaH_predicted_spherical;  // výška podle R(1-cos(σ))
-        
-    // Krok 6B: Skutečné hodnoty z měřených úhlů
-    // Co skutečně vidíme na základě úhlů zadaných v polích?
+  
     const theta_Rad = (thetaPeakToStar-thetaHeffronToPeak) * Math.PI / 180;
 
     const deltaH_measured_from_angles = R * (1 - Math.cos(theta_Rad));
 
     // Chyby pro Model 3 (predikce vs. skutečnost)
-    const deltaH_actual = hPeak - hObs;  
+     
     const errorH_GE_Spherical = deltaH_predicted_spherical - deltaH_measured_from_angles;  // R(1-cos(σ)) vs. skutečná výška
     const errorD_GE_Spherical = distance - (R * theta_Rad); // distance consistency check
+    
+    console.log("Step 6 variables:", {
+      deltaH_predicted_spherical: deltaH_predicted_spherical,
+      theta_Rad: theta_Rad,
+      deltaH_measured_from_angles: deltaH_measured_from_angles,
+      errorH_GE_Spherical: errorH_GE_Spherical,
+      errorD_GE_Spherical: errorD_GE_Spherical
+    });
     
     // Pro výstup do tabulky: používáme predikovanou výšku
     const deltaH_GE_Spherical = deltaH_predicted_spherical;
     const distance_GE_Spherical = deltaH / Math.tan(thetaGlobeSpherical);
+
+    const chordArcDiff = L - distance;
+    
+    // Pro sférický model musíme přidat nové hodnoty
+    const cosAlphaValue = (RO*RO + L*L - RP*RP) / (2 * RO * L);
+    const alphaValue = Math.acos(Math.max(-1, Math.min(1, cosAlphaValue)));
+    const thetaBaseValue = alphaValue - Math.PI/2;
     
     // Porovnání úhlů: predikovaný vs. měřený
     const angleErrorSpherical = (thetaGlobeSpherical - thetaTotalRad) * 180 / Math.PI;
@@ -915,65 +901,22 @@
     document.getElementById('RPDisplay3').textContent = RP.toLocaleString();
     document.getElementById('LDisplay').textContent = L.toFixed(1);
     
-    const chordArcDiff = L - distance;
     document.getElementById('chordArcDiff').textContent = chordArcDiff.toFixed(0);
-    
-    // Pro sférický model musíme přidat nové hodnoty
-    const cosAlphaValue = (RO*RO + L*L - RP*RP) / (2 * RO * L);
-    const alphaValue = Math.acos(Math.max(-1, Math.min(1, cosAlphaValue)));
-    const thetaBaseValue = alphaValue - Math.PI/2;
     
     document.getElementById('alphaDisplay').textContent = (alphaValue * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('thetaBaseDisplay').textContent = (thetaBaseValue * 180 / Math.PI).toFixed(3) + '°';
-    document.getElementById('thetaBaseDisplay2').textContent = (thetaBaseValue * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('sigmaCorrectionDisplay').textContent = (sigma * 180 / Math.PI).toFixed(3) + '°';
     document.getElementById('thetaSphericalDisplay').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
-    document.getElementById('thetaSphericalDisplay3').textContent = (thetaGlobeSpherical * 180 / Math.PI).toFixed(3) + '°';
-    document.getElementById('thetaStarDisplay3').textContent = thetaTotal.toFixed(4) + '°';
     
-    // Nové hodnoty pro Step 6 - sférické výpočty
-    document.getElementById('radiusDisplay5').textContent = R.toLocaleString();
-    document.getElementById('distanceDisplay6a').textContent = distance.toLocaleString();
-    document.getElementById('LDisplay3').textContent = L.toFixed(1);
-    document.getElementById('LDisplay4').textContent = L.toFixed(1);
-    document.getElementById('sigmaDisplay3').textContent = sigma.toFixed(6);
-    
-    // Použijeme již vypočítané hodnoty z kroku 6
-    document.getElementById('dropSphericalDisplay').textContent = drop_spherical.toFixed(1);
-    document.getElementById('dropSphericalDisplay2').textContent = drop_spherical.toFixed(1);
-    document.getElementById('hGeometricDisplay').textContent = h_geometric.toFixed(0);
-    document.getElementById('hGeometricDisplay2').textContent = h_geometric.toFixed(1);
-    document.getElementById('tiltCorrectionDisplay').textContent = tilt_correction.toFixed(1);
-    document.getElementById('tiltCorrectionDisplay2').textContent = tilt_correction.toFixed(1);
-    
-    // Nové display hodnoty pro Step 6A s R(1-cos(σ)) vzorcem
-    document.getElementById('sigmaDisplay4').textContent = sigma.toFixed(6);
-    document.getElementById('sigmaDisplay5').textContent = sigma.toFixed(6);
-    document.getElementById('radiusDisplay6').textContent = R.toLocaleString();
-    
-    // Nové display hodnoty pro Step 6A a 6B
-    document.getElementById('deltaH_predicted_display').textContent = deltaH_predicted_spherical.toFixed(0);
-    document.getElementById('deltaH_measured_display').textContent = deltaH_measured_from_angles.toFixed(0);
-    document.getElementById('distanceDisplay_measured').textContent = distance.toLocaleString();
-    document.getElementById('thetaTotalDisplay').textContent = thetaTotal.toFixed(4) + '°';
-    
-    // Error calculations
-    const errorH_measured = deltaH_measured_from_angles - deltaH;
-    document.getElementById('errorH_measured_display').textContent = (errorH_measured > 0 ? '+' : '') + errorH_measured.toFixed(0);
-    
-    document.getElementById('deltaH_Sph_display2').textContent = deltaH_GE_Spherical.toFixed(0);
-    document.getElementById('deltaHActual3').textContent = deltaH.toLocaleString();
-    document.getElementById('errorH_Sph_display').textContent = (errorH_GE_Spherical > 0 ? '+' : '') + errorH_GE_Spherical.toFixed(0);
-    document.getElementById('errorD_Sph_display').textContent = (errorD_GE_Spherical > 0 ? '+' : '') + errorD_GE_Spherical.toFixed(0);
-    document.getElementById('angleErrorSph').textContent = (angleErrorSpherical > 0 ? '+' : '') + angleErrorSpherical.toFixed(3) + '°';
-    
-    // Summary section - updated to show angle errors
-    const angleErrorFE = 0; // Flat Earth assumes measured angle is correct
-    const angleErrorHeffron = (thetaGlobeHeffron - thetaTotalRad) * 180 / Math.PI;
-    
-    document.getElementById('errorH_Sph_summary').textContent = (errorH_GE_Spherical > 0 ? '+' : '') + errorH_GE_Spherical.toFixed(0);
-    document.getElementById('errorH_FE_summary').textContent = (errorH_FE > 0 ? '+' : '') + errorH_FE.toFixed(0);
-    document.getElementById('errorH_Heffron_summary').textContent = (errorH_GE_Heffron > 0 ? '+' : '') + errorH_GE_Heffron.toFixed(0);
+    // Step 6: Model 3 verification outputs
+    console.log("Updating Step 6 displays...");
+    document.getElementById('deltaH_predicted_spherical_display').textContent = deltaH_predicted_spherical.toFixed(1);
+    document.getElementById('thetaPeakToStarDisplay').textContent = thetaPeakToStar.toFixed(3);
+    document.getElementById('thetaHeffronToPeakDisplay').textContent = thetaHeffronToPeak.toFixed(3);
+    document.getElementById('theta_measured_display').textContent = theta_Rad.toFixed(6);
+    document.getElementById('deltaH_measured_spherical_display').textContent = deltaH_measured_from_angles.toFixed(1);
+    document.getElementById('errorH_spherical_step6_display').textContent = (errorH_GE_Spherical > 0 ? '+' : '') + errorH_GE_Spherical.toFixed(1);
+    document.getElementById('errorD_spherical_step6_display').textContent = (errorD_GE_Spherical > 0 ? '+' : '') + errorD_GE_Spherical.toFixed(1);
   }
 
   // Run on load
