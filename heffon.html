@@ -821,6 +821,37 @@
       </td>
     `;
     
+    // Add legend row for spherical model - as table cells
+    const legendRow = tbody.insertRow();
+    legendRow.style.backgroundColor = '#e3f2fd';
+    legendRow.style.borderLeft = '4px solid #2196f3';
+    legendRow.innerHTML = `
+      <td style="padding: 10px; font-size: 0.85rem; color: #0d47a1; font-weight: bold;">
+        <strong>Model</strong><br>
+        <span style="font-weight: normal;">Spherical trigonometry</span>
+      </td>
+      <td style="padding: 10px; font-size: 0.85rem; color: #1565c0;">
+        <strong>Predicted ΔHeight</strong><br>
+        <span style="font-weight: normal;">Curvature-based height using R(1-cos(σ))</span>
+      </td>
+      <td style="padding: 10px; font-size: 0.85rem; color: #1976d2;">
+        <strong>Height Error</strong><br>
+        <span style="font-weight: normal;">Predicted vs measured curvature</span>
+      </td>
+      <td style="padding: 10px; font-size: 0.85rem; color: #1e88e5;">
+        <strong>Predicted Distance</strong><br>
+        <span style="font-weight: normal;">Arc distance from geometry</span>
+      </td>
+      <td style="padding: 10px; font-size: 0.85rem; color: #42a5f5;">
+        <strong>Distance Error</strong><br>
+        <span style="font-weight: normal;">Arc vs chord difference</span>
+      </td>
+      <td style="padding: 10px; font-size: 0.85rem; color: #64b5f6;">
+        <strong>Conclusion</strong><br>
+        <span style="font-weight: normal;">Theoretical baseline</span>
+      </td>
+    `;
+    
     // Add spherical model row with special formatting
     const sphericalRow = tbody.insertRow();
     sphericalRow.style.backgroundColor = '#e3f2fd';
