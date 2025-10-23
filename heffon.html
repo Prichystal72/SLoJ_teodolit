@@ -726,9 +726,6 @@
     // === MODEL 3: PURE SPHERICAL PREDICTION (bez použití vstupních úhlů) ===
     // Krok 6A: Predikce výšky pomocí POUZE sférické geometrie
     // Použijeme jen geometrické parametry: distance, hObs, hPeak, R
-    
-    
-    
     // Správný vzorec pro predikci výšky na kouli: R(1 - cos(σ))
     const deltaH_predicted_spherical = R * (1 - Math.cos(sigma));
     
@@ -744,7 +741,7 @@
     // Chyby pro Model 3 (predikce vs. skutečnost)
     const deltaH_actual = hPeak - hObs;  
     const errorH_GE_Spherical = deltaH_predicted_spherical - deltaH_measured_from_angles;  // R(1-cos(σ)) vs. skutečná výška
-    const errorD_GE_Spherical = distance - (deltaH_actual / Math.tan(thetaGlobeSpherical)); // distance consistency check
+    const errorD_GE_Spherical = distance - (R * theta_Rad); // distance consistency check
     
     // Pro výstup do tabulky: používáme predikovanou výšku
     const deltaH_GE_Spherical = deltaH_predicted_spherical;
@@ -791,7 +788,7 @@
         name: "Globe Earth (Spherical)",
         predH: deltaH_GE_Spherical,
         errH: errorH_GE_Spherical,
-        predD: distance_GE_Spherical,
+        predD: distance,
         errD: errorD_GE_Spherical,
         conclusive: isConclusive(errorH_GE_Spherical, errorD_GE_Spherical),
         totalError: getTotalError(errorH_GE_Spherical, errorD_GE_Spherical)
