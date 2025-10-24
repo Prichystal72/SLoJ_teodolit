@@ -195,15 +195,18 @@
           <path d="M 50 170 L 80 120 L 90 135 L 110 100 L 130 120 L 140 110 L 160 170 Z" 
                 fill="white" stroke="black" stroke-width="3"/>
           
-          <!-- Mountain 2 -->
+          <!-- Mountain 2 (tallest peak at x=250, y=95) -->
           <path d="M 180 170 L 210 110 L 230 130 L 250 95 L 270 115 L 290 105 L 310 120 L 330 170 Z" 
                 fill="white" stroke="black" stroke-width="3"/>
           
-          <!-- Line of sight (dashed) -->
-          <line x1="290" y1="115" x2="520" y2="155" stroke="gray" stroke-width="3" stroke-dasharray="10,5"/>
+          <!-- One straight line from star through mountain peak to telescope/observer -->
+          <line x1="30" y1="45" x2="560" y2="160" stroke="gray" stroke-width="2" stroke-dasharray="10,5"/>
+          
+          <!-- Star at one end -->
+          <circle cx="30" cy="45" r="5" fill="#DAA520" stroke="#B8860B" stroke-width="1"/>
           
           <!-- Telescope -->
-          <g transform="translate(510, 140)">
+          <g transform="translate(510, 135)">
             <rect x="0" y="0" width="35" height="25" fill="black" stroke="black" stroke-width="2"/>
             <polygon points="35,5 45,0 45,30 35,25" fill="black"/>
             <!-- Tripod -->
@@ -213,12 +216,12 @@
           </g>
           
           <!-- Observer -->
-          <circle cx="530" cy="150" r="8" fill="black"/>
-          <line x1="530" y1="158" x2="530" y2="175" stroke="black" stroke-width="3"/>
-          <line x1="530" y1="165" x2="520" y2="170" stroke="black" stroke-width="3"/>
-          <line x1="530" y1="165" x2="540" y2="170" stroke="black" stroke-width="3"/>
-          <line x1="530" y1="175" x2="520" y2="185" stroke="black" stroke-width="3"/>
-          <line x1="530" y1="175" x2="540" y2="185" stroke="black" stroke-width="3"/>
+          <circle cx="530" cy="145" r="8" fill="black"/>
+          <line x1="530" y1="153" x2="530" y2="170" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="160" x2="520" y2="165" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="160" x2="540" y2="165" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="170" x2="520" y2="180" stroke="black" stroke-width="3"/>
+          <line x1="530" y1="170" x2="540" y2="180" stroke="black" stroke-width="3"/>
         </svg>
       </div>
       
@@ -228,26 +231,33 @@
         <h4 style="color: green; font-size: 1.1rem; margin-bottom: 3px;">H₁: Earth is flat</h4>
         <h4 style="color: red; font-size: 1.1rem; margin-bottom: 15px;">H₀: Earth is not flat</h4>
         <svg width="100%" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
-          <!-- Curved ground line -->
+          <!-- Curved ground line (quadratic bezier curve) -->
           <path d="M 20 180 Q 300 140 580 180" fill="none" stroke="black" stroke-width="3"/>
           
-          <!-- Mountain 1 on curve -->
-          <g transform="translate(50, 175)">
+          <!-- Mountain 1 on curve - rotated to be perpendicular to curve -->
+          <!-- At x=105 on curve, tangent angle ≈ -8° (leaning left) -->
+          <g transform="translate(50, 175) rotate(-8, 55, 0)">
             <path d="M 0 0 L 30 -60 L 40 -45 L 60 -75 L 80 -55 L 90 -65 L 110 0 Z" 
                   fill="white" stroke="black" stroke-width="3"/>
           </g>
           
-          <!-- Mountain 2 on curve -->
-          <g transform="translate(180, 160)">
+          <!-- Mountain 2 on curve - rotated to be perpendicular to curve -->
+          <!-- At x=255 on curve, tangent angle ≈ -2° (slightly leaning left) -->
+          <!-- Highest peak at relative position (70, -60) rotated by -2° -->
+          <g transform="translate(180, 160) rotate(-2, 75, 0)">
             <path d="M 0 0 L 30 -50 L 50 -30 L 70 -60 L 90 -40 L 110 -50 L 130 -30 L 150 0 Z" 
                   fill="white" stroke="black" stroke-width="3"/>
           </g>
           
-          <!-- Line of sight (dashed, tangent to curve) -->
-          <line x1="290" y1="125" x2="520" y2="165" stroke="gray" stroke-width="3" stroke-dasharray="10,5"/>
+          <!-- One straight line from star through mountain peak to telescope/observer -->
+          <line x1="30" y1="55" x2="555" y2="160" stroke="gray" stroke-width="2" stroke-dasharray="10,5"/>
           
-          <!-- Telescope -->
-          <g transform="translate(510, 150)">
+          <!-- Star at one end -->
+          <circle cx="30" cy="55" r="5" fill="#DAA520" stroke="#B8860B" stroke-width="1"/>
+          
+          <!-- Telescope - rotated to stand perpendicular on curved surface -->
+          <!-- At x=530 on curve, tangent angle ≈ +6° (leaning right) -->
+          <g transform="translate(510, 145) rotate(6, 20, 10)">
             <rect x="0" y="0" width="35" height="25" fill="black" stroke="black" stroke-width="2"/>
             <polygon points="35,5 45,0 45,30 35,25" fill="black"/>
             <!-- Tripod -->
@@ -256,13 +266,22 @@
             <line x1="15" y1="25" x2="20" y2="40" stroke="black" stroke-width="2"/>
           </g>
           
-          <!-- Observer -->
-          <circle cx="530" cy="160" r="8" fill="black"/>
-          <line x1="530" y1="168" x2="530" y2="185" stroke="black" stroke-width="3"/>
-          <line x1="530" y1="175" x2="520" y2="180" stroke="black" stroke-width="3"/>
-          <line x1="530" y1="175" x2="540" y2="180" stroke="black" stroke-width="3"/>
-          <line x1="530" y1="185" x2="520" y2="195" stroke="black" stroke-width="3"/>
-          <line x1="530" y1="185" x2="540" y2="195" stroke="black" stroke-width="3"/>
+          <!-- Observer - rotated to stand perpendicular on curved surface -->
+          <g transform="translate(0, 0) rotate(6, 530, 155)">
+            <circle cx="530" cy="155" r="8" fill="black"/>
+            <line x1="530" y1="163" x2="530" y2="180" stroke="black" stroke-width="3"/>
+            <line x1="530" y1="170" x2="520" y2="175" stroke="black" stroke-width="3"/>
+            <line x1="530" y1="170" x2="540" y2="175" stroke="black" stroke-width="3"/>
+            <line x1="530" y1="180" x2="520" y2="190" stroke="black" stroke-width="3"/>
+            <line x1="530" y1="180" x2="540" y2="190" stroke="black" stroke-width="3"/>
+          </g>
+        </svg>
+      </div>
+            <line x1="530" y1="175" x2="520" y2="180" stroke="black" stroke-width="3"/>
+            <line x1="530" y1="175" x2="540" y2="180" stroke="black" stroke-width="3"/>
+            <line x1="530" y1="185" x2="520" y2="195" stroke="black" stroke-width="3"/>
+            <line x1="530" y1="185" x2="540" y2="195" stroke="black" stroke-width="3"/>
+          </g>
         </svg>
       </div>
     </div>
