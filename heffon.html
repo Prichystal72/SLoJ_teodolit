@@ -286,7 +286,7 @@
         </div>
         <div class="form-group">
           <label>Distance (m)</label>
-          <input type="number" id="distance" value="50778" step="1">
+          <input type="number" id="distance" value="50700" step="1">
         </div>
         <div class="form-group">
           <label>From Heffron to Peak (°)</label>
@@ -362,7 +362,7 @@
               
               <!-- Distance annotation -->
               <line x1="100" y1="155" x2="400" y2="155" stroke="#666" stroke-width="1"/>
-              <text x="220" y="175" font-size="11" fill="#666">d = 50,778 m</text>
+              <text x="220" y="175" font-size="11" fill="#666">d = 50,700 m</text>
               
               <!-- Angle theta -->
               <path d="M 150 140 L 130 140 A 30 30 0 0 1 135 125" fill="none" stroke="purple" stroke-width="2"/>
@@ -417,7 +417,7 @@
               
               <!-- Arc distance (along surface) -->
               <path d="M 100 195 Q 250 155 400 190" fill="none" stroke="orange" stroke-width="2" stroke-dasharray="3,3"/>
-              <text x="220" y="150" font-size="11" fill="orange" font-weight="bold">d (arc) = 50,778 m</text>
+              <text x="220" y="150" font-size="11" fill="orange" font-weight="bold">d (arc) = 50,700 m</text>
               
               <!-- "Drop" annotation -->
               <line x1="400" y1="185" x2="400" y2="130" stroke="red" stroke-width="2"/>
@@ -480,7 +480,7 @@
           <p><strong>Formulas:</strong></p>
           <p style="margin-left: 20px; font-family: 'Courier New', monospace;">
             <strong>Step 1:</strong> Calculate central angle<br>
-            σ = d / R = <span id="distanceDisplay5">50,778</span> / <span id="radiusDisplay2">6,371,000</span> = <span id="sigmaDisplay">0.007970</span> rad<br><br>
+            σ = d / R = <span id="distanceDisplay5">50,700</span> / <span id="radiusDisplay2">6,371,000</span> = <span id="sigmaDisplay">0.007970</span> rad<br><br>
             
             <strong>Step 2:</strong> Calculate distances from Earth's center<br>
             R<sub>O</sub> = R + h<sub>obs</sub> = <span id="radiusDisplay3">6,371,000</span> + <span id="hObsDisplay">2,073</span> = <span id="RODisplay">6,373,073</span> m<br>
@@ -615,7 +615,7 @@
             
             <strong>6B: Measured height from input angles:</strong><br>
             θ<sub>measured</sub> = θ<sub>peak→star</sub> - θ<sub>Heffron→peak</sub><br>
-            θ<sub>measured</sub> = <span id="thetaPeakToStarDisplay">0</span>° - <span id="thetaHeffronToPeakDisplay">0</span>° = <span id="theta_measured_display">0</span>°<br>
+            θ<sub>measured</sub> = <span id="thetaPeakToStarDisplay">0</span>° - <span id="thetaHeffronToPeakDisplay">0</span>° = <span id="theta_measured_display">0</span> RAD<br>
             Δh<sub>measured</sub> = R × (1 - cos(θ<sub>measured</sub>))<br>
             Δh<sub>measured</sub> = <span id="deltaH_measured_spherical_display">0</span> m<br><br>
             
@@ -630,7 +630,7 @@
     </section>
 
     <footer>
-      &copy; Space League of Justice | Celestial Theodolite Calculator v1.0
+      &copy; Jaroslav Prichystal | Space League of Justice | Celestial Theodolite Calculator v1.0
     </footer>
   </div>
 
@@ -684,7 +684,7 @@
     // L² = RO² + RP² - 2·RO·RP·cos(σ)
     const L = Math.sqrt(RO*RO + RP*RP - 2*RO*RP*Math.cos(sigma));
     // Výsledek: L ≈ 50,852 m (přímka vzduchem)
-    // Porovnání: oblouková vzdálenost = 50,778 m (po povrchu)
+    // Porovnání: oblouková vzdálenost = 50,700 m (po povrchu)
     // Rozdíl: 74 m - toto je důležité!
     
     // Krok 4: Výpočet úhlu α u pozorovatele pomocí kosinovy věty
@@ -707,7 +707,7 @@
     const deltaH_predicted_spherical = R * (1 - Math.cos(sigma));
   
     const theta_Rad = (thetaPeakToStar-thetaHeffronToPeak) * Math.PI / 180;
-
+    
     const deltaH_measured_from_angles = R * (1 - Math.cos(theta_Rad));
 
     // Chyby pro Model 3 (predikce vs. skutečnost)
