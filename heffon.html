@@ -292,15 +292,16 @@
           <input type="number" id="distance" value="50700" step="1">
         </div>
         <div class="form-group">
-          <label>From Heffron to Peak (°)</label>
+          <label>Elevation from Heffron to Peak (°) (without refraction) </label>
           <input type="number" id="thetaHeffronToPeak" value="2.282" step="0.0001">
         </div>
         <div class="form-group">
-          <label>From Peak to Star (°)</label>
+          <label>Elevation from Peak to Star (°) (without refraction)</label>
           <input type="number" id="thetaPeakToStar" value="2.738" step="0.0001">
         </div>
         <div class="form-group">
           <label>Earth Radius (m)</label>
+          <label style="font-size: 0.8rem; color: var(--dark);"> (default: 6 371 000 m)</label>
           <input type="number" id="earthRadius" value="6371000" step="1000">
         </div>
       </div>
@@ -379,22 +380,22 @@
           
           <p><strong>Formula:</strong></p>
           <p style="margin-left: 20px; font-family: 'Courier New', monospace;">
-            θ<sub>FE</sub> = θ<sub>Heffron</sub> = <span id="thetaStarDisplay">0</span><br><br>
+            θ<sub>FE</sub> = θ<sub>Star</sub> = <span id="thetaStarDisplay">0</span><br><br>
             
             <strong>Height prediction:</strong><br>
-            Δh<sub>predicted</sub> = d × tan(θ<sub>Heffron</sub>)<br>
+            Δh<sub>predicted</sub> = d × tan(θ<sub>Star</sub>)<br>
             Δh<sub>predicted</sub> = <span id="distanceDisplay">0</span> × tan(<span id="thetaStarDisplay2">0</span>) = <span id="deltaH_FE_display">0</span> m<br>
             <em>Actual Δh = <span id="deltaHActual">0</span> m</em><br>
             <strong>Height error = <span id="errorH_FE_display">0</span> m</strong><br><br>
             
             <strong>Distance prediction:</strong><br>
-            d<sub>predicted</sub> = Δh / tan(θ<sub>Heffron</sub>)<br>
+            d<sub>predicted</sub> = Δh / tan(θ<sub>Star</sub>)<br>
             d<sub>predicted</sub> = <span id="deltaHActual_FE">0</span> / tan(<span id="thetaStarDisplay_FE">0</span>) = <span id="distance_FE_display">0</span> m<br>
             <em>Actual d = <span id="distanceActual_FE">0</span> m</em><br>
             <strong>Distance error = <span id="errorD_FE_display">0</span> m</strong>
           </p>
           <p style="margin-top: 10px; font-size: 13px;">
-            <strong>⚠️ Problem:</strong> Ignores Earth's curvature completely. Works only for very short distances.
+            <strong>⚠️ Problem:</strong> Ignores Earth's curvature completely.
           </p>
         </div>
       </div>
@@ -450,18 +451,18 @@
             drop = <span id="distanceDisplay2">0</span>² / (2 × <span id="radiusDisplay">0</span>) = <span id="dropDisplay">0</span> m<br><br>
             
             <strong>Step 2: Calculate angle</strong><br>
-            θ<sub>Heffron</sub> = arctan((Δh - drop) / d)<br>
-            θ<sub>Heffron</sub> = arctan((<span id="deltaHActual2">0</span> - <span id="dropDisplay2">0</span>) / <span id="distanceDisplay3">0</span>)<br>
-            θ<sub>Heffron</sub> = arctan(<span id="deltaHMinusDrop">0</span> / <span id="distanceDisplay4">0</span>) = <span id="thetaHeffronDisplay">0</span><br><br>
+            θ<sub>Calculate</sub> = arctan((Δh - drop) / d)<br>
+            θ<sub>Calculate</sub> = arctan((<span id="deltaHActual2">0</span> - <span id="dropDisplay2">0</span>) / <span id="distanceDisplay3">0</span>)<br>
+            θ<sub>Calculate</sub> = arctan(<span id="deltaHMinusDrop">0</span> / <span id="distanceDisplay4">0</span>) = <span id="thetaHeffronDisplay">0</span><br><br>
             
             <strong>Step 3: Height prediction</strong><br>
-            Δh<sub>predicted</sub> = d × tan(θ<sub>Heffron</sub>)<br>
+            Δh<sub>predicted</sub> = d × tan(θ<sub>Calculate</sub>)<br>
             Δh<sub>predicted</sub> = <span id="distanceDisplay_Heffron">0</span> × tan(<span id="thetaHeffronDisplay2">0</span>) = <span id="deltaH_Heffron_display">0</span> m<br>
             <em>Actual Δh = <span id="deltaHActual_Heffron">0</span> m</em><br>
             <strong>Height error = <span id="errorH_Heffron_display">0</span> m</strong><br><br>
             
             <strong>Step 4: Distance prediction</strong><br>
-            d<sub>predicted</sub> = Δh / tan(θ<sub>Heffron</sub>)<br>
+            d<sub>predicted</sub> = Δh / tan(θ<sub>Calculate</sub>)<br>
             d<sub>predicted</sub> = <span id="deltaHActual_Heffron2">0</span> / tan(<span id="thetaHeffronDisplay3">0</span>) = <span id="distance_Heffron_display">0</span> m<br>
             <em>Actual d = <span id="distanceActual_Heffron">0</span> m</em><br>
             <strong>Distance error = <span id="errorD_Heffron_display">0</span> m</strong>
@@ -471,7 +472,7 @@
             in arctan formula that requires a STRAIGHT line distance! This is like using a tape measure 
             that bends around the Earth's curve, but treating it as if it were stretched tight. 
             The formula also ignores that local horizons are tilted on a sphere. 
-            <strong>Systematically underestimates angles by ~<span id="angleUnderestimate">0</span>°!</strong>
+            <strong>Systematically underestimates angles!</strong>
           </p>
         </div>
       </div>
@@ -657,9 +658,9 @@
     const deltaH = hPeak - hObs;
     
     // For Flat Earth: should use only the angle to peak, no star correction
-    const thetaFlatEarth = thetaHeffronToPeak; // Flat Earth assumes star is at peak
+    const thetaFlatEarth = thetaPeakToStar; // Flat Earth assumes star is at peak
     const thetaFlatEarthRad = thetaFlatEarth * Math.PI / 180;
-    const thetaTotalRad = thetaTotal * Math.PI / 180;
+    //const thetaTotalRad = thetaTotal * Math.PI / 180;
 
     // === FLAT EARTH MODEL ===
     const deltaH_FE = distance * Math.tan(thetaFlatEarthRad);
@@ -741,7 +742,7 @@
     const thetaBaseValue = alphaValue - Math.PI/2;
     
     // Porovnání úhlů: predikovaný vs. měřený
-    const angleErrorSpherical = (thetaGlobeSpherical - thetaTotalRad) * 180 / Math.PI;
+    //const angleErrorSpherical = (thetaGlobeSpherical - thetaTotalRad) * 180 / Math.PI;
 
     // VÝSLEDEK:
     // Tento výpočet používá SPRÁVNOU sférovou geometrii s kosinovou větou
@@ -815,7 +816,7 @@
         <td class="${Math.abs(model.errH) <= 60 ? 'conclusive' : 'inconclusive'}">${model.errH.toFixed(1)}</td>
         <td>${model.predD.toFixed(0)}</td>
         <td class="${Math.abs(model.errD) <= 1609 ? 'conclusive' : 'inconclusive'}">${model.errD.toFixed(0)}</td>
-        <td class="${isBest ? 'conclusive' : 'inconclusive'}">${isBest ? '✓ MOST ACCURATE' : 'Inaccurate'}</td>
+        <td class="${isBest ? 'conclusive' : 'inconclusive'}">${isBest ? 'Relatively more accurate.' : 'Inaccurate'}</td>
       `;
     });
     
@@ -918,8 +919,8 @@
     document.getElementById('errorD_Heffron_display').textContent = (errorD_GE_Heffron > 0 ? '+' : '') + errorD_GE_Heffron.toFixed(0);
     
     // Angle underestimation
-    const angleUnderestimate = thetaTotal - (thetaGlobeHeffron * 180 / Math.PI);
-    document.getElementById('angleUnderestimate').textContent = angleUnderestimate.toFixed(2);
+    //const angleUnderestimate = thetaTotal - (thetaGlobeHeffron * 180 / Math.PI);
+    //document.getElementById('angleUnderestimate').textContent = angleUnderestimate.toFixed(2);
     
     // Model 3: Spherical
     document.getElementById('distanceDisplay5').textContent = distance.toLocaleString();
