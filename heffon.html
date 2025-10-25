@@ -973,7 +973,15 @@
   }
 
   // Run on load
-  window.onload = calculate;
+  window.onload = function() {
+    calculate();
+    
+    // Add event listeners to all input fields for automatic recalculation
+    const inputs = document.querySelectorAll('input[type="number"], input[type="text"]');
+    inputs.forEach(input => {
+      input.addEventListener('input', calculate);
+    });
+  };
 </script>
 </body>
 </html>
