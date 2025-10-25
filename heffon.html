@@ -639,13 +639,13 @@
             <strong>Step 6: Model 3 Verification (Predicted vs. Measured)</strong><br><br>
             
             <strong>6A: Predicted height from spherical geometry:</strong><br>
-            Δh<sub>predicted</sub> = R × (1 - cos(σ))<br>
+            Δh<sub>predicted</sub> = RP × (1 - cos(σ))<br>
             Δh<sub>predicted</sub> = <span id="deltaH_predicted_spherical_display">0</span> m<br><br>
             
             <strong>6B: Measured height from input angles:</strong><br>
             θ<sub>measured</sub> = θ<sub>peak→star</sub> - θ<sub>Heffron→peak</sub><br>
             θ<sub>measured</sub> = <span id="thetaPeakToStarDisplay">0</span>° - <span id="thetaHeffronToPeakDisplay">0</span>° = <span id="theta_measured_display">0</span> RAD<br>
-            Δh<sub>measured</sub> = R × (1 - cos(θ<sub>measured</sub>))<br>
+            Δh<sub>measured</sub> = RP × (1 - cos(θ<sub>measured</sub>))<br>
             Δh<sub>measured</sub> = <span id="deltaH_measured_spherical_display">0</span> m<br><br>
             
             <strong>6C: Errors for Model 3:</strong><br>
@@ -733,17 +733,17 @@
     // Krok 6A: Predikce výšky pomocí POUZE sférické geometrie
     // Použijeme jen geometrické parametry: distance, hObs, hPeak, R
     // Správný vzorec pro predikci výšky na kouli: R(1 - cos(σ))
-    const deltaH_predicted_spherical = R * (1 - Math.cos(sigma));
+    const deltaH_predicted_spherical = RP * (1 - Math.cos(sigma));
   
     const theta_Rad = (thetaPeakToStar-thetaHeffronToPeak) * Math.PI / 180;
     
-    const deltaH_measured_from_angles = R * (1 - Math.cos(theta_Rad));
+    const deltaH_measured_from_angles = RP * (1 - Math.cos(theta_Rad));
 
     // Chyby pro Model 3 (predikce vs. skutečnost)
      
-    const errorH_GE_Spherical = deltaH_predicted_spherical - deltaH_measured_from_angles;  // R(1-cos(σ)) vs. skutečná výška
+    const errorH_GE_Spherical = deltaH_predicted_spherical - deltaH_measured_from_angles;  // RP(1-cos(σ)) vs. skutečná výška
     const errorD_GE_Spherical = distance - (R * theta_Rad); // distance consistency check
-    
+
     console.log("Step 6 variables:", {
       deltaH_predicted_spherical: deltaH_predicted_spherical,
       theta_Rad: theta_Rad,
@@ -861,7 +861,7 @@
       </td>
       <td style="padding: 10px; font-size: 0.85rem; color: #1565c0;">
         <strong>Predicted ΔHeight</strong><br>
-        <span style="font-weight: normal;">Curvature-based height using R(1-cos(σ))</span>
+        <span style="font-weight: normal;">Curvature-based height using RP(1-cos(σ))</span>
       </td>
       <td style="padding: 10px; font-size: 0.85rem; color: #1976d2;">
         <strong>Height Error</strong><br>
